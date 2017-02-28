@@ -21,16 +21,16 @@ module.exports = {
         return Promise.resolve(db.find({_id: ObjectId(id)}).limit(1).toArray());
     },
 
-    update: (params) => {
-
+    update: (id, params) => {
+        return Promise.resolve(db.findOneAndUpdate({_id: ObjectId(id)}, params).toArray());
     },
 
     create: (params) => {
         return Promise.resolve(db.insertOne(params));
     },
 
-    delete: (params) => {
-
+    delete: (id) => {
+        return Promise.resolve(db.findOneAndDelete({_id: ObjectId(id)}.toArray()));
     }
 
 }

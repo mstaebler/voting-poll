@@ -8,7 +8,7 @@ var Promise = require('bluebird');
 var PollController = require('./controllers/PollController');
 require('dotenv').config();
 
-PollController.connect().then(output => console.log('success',output));
+PollController.connect().then(output => console.log('connection success'));
 
 
 var index = require('./routes/index');
