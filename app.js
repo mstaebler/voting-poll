@@ -4,6 +4,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var Promise = require('bluebird');
+var PollController = require('./controllers/PollController');
+require('dotenv').config();
+
+PollController.connect().then(output => console.log('success',output));
+
 
 var index = require('./routes/index');
 var api = require('./routes/api');

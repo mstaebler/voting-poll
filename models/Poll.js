@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var Promise = require('bluebird');
+var mongoose = Promise.promisifyAll(require('mongoose'));
 
 var PollSchema = new mongoose.Schema({
     title: {type:String, default:''},
