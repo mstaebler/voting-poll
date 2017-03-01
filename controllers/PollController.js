@@ -3,7 +3,6 @@ var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require('mongodb').MongoClient);
 var ObjectId = require('mongodb').ObjectId;
 var db;
-//var ObjectId = require('mongodb').ObjectId;
 
 module.exports = {
     connect: () => {

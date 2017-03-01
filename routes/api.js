@@ -5,7 +5,6 @@ var controllers = require('../controllers');
 router.get('/:resource', (req, res, next) => {
     var resource = req.params.resource;
     var controller = controllers[resource];
-    console.log('controller is: ',controller);
 
     if(controller === null){
         console.log({
