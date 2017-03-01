@@ -9,10 +9,11 @@ class Poll extends Component {
                 <Option key={option.toString()} option={option} />
             )
         }) 
+        const style = styles.poll
         return(
-            <div style={styles.container}>
-                <li style={styles.list}>
-                    <h3 style={styles.header}>{this.props.name}</h3>
+            <div style={style.container}>
+                <li style={style.list}>
+                    <h3 style={style.header}>{this.props.name}</h3>
                     <p>{this.props.question}</p>
                     <ol>
                         {options}

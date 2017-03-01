@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import Polls from './components/Polls'
+import Home from './components/Home'
 
 class App extends Component {
 
     render(){
         return (
             <div>
-                <Polls />
+                <Home />
             </div>
         )
     }
