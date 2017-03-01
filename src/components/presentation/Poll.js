@@ -4,7 +4,7 @@ import styles from './styles'
 
 class Poll extends Component {
     render(){      
-        const options = this.props.optionArray.map((option) => {
+        const options = this.props.options.map((option) => {
             return(
                 <Option key={option.toString()} option={option} />
             )
