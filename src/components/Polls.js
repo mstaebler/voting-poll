@@ -12,11 +12,17 @@ class Polls extends Component {
         }
     }
     render(){
+
+        const pollItems = this.state.polls.map((poll, i)  => {
+            return(
+                <Poll key={poll.name} name={poll.name} question={poll.question} optionArray={poll.optionArray} />
+            )
+        })
+
         return(
             <div>
                 <ul>
-                    <Poll name={this.state.polls[0].name} question={this.state.polls[0].question} optionArray={this.state.polls[0].optionArray} />
-                    <Poll name={this.state.polls[1].name} question={this.state.polls[1].question} optionArray={this.state.polls[1].optionArray} />
+                    {pollItems}
                 </ul>
             </div>
         )
