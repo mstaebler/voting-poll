@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import { FormControl } from 'react-bootstrap'
 
 class Option extends Component {
     render(){
         return(
             <div>
                 <li>
-                    {this.props.option}
+                    <FormControl type="text" placeholder="Option" />
                 </li>
             </div>
         )

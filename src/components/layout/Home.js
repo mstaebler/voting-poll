@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Polls from './Polls'
+import Polls from '../containers/Polls'
 import Navigation from './Navigation'
 import { Jumbotron } from 'react-bootstrap'
 

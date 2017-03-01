@@ -19,12 +19,12 @@ class Navigation extends Component {
                     </Nav>
                     <Navbar.Form style={{marginRight:10}} pullRight>
                         <FormGroup>
-                        <FormControl type="text" placeholder="Username" />
-                        <FormControl type="text" placeholder="Password" />
+                            <FormControl type="text" placeholder="Username" />
+                            <FormControl type="text" placeholder="Password" />
+                            {' '}
+                            <Button type="submit">Login</Button>
                         </FormGroup>
-                        {' '}
-                        <Button type="submit">Login</Button>
-                        <Button href="#">Sign Up</Button>
+                            <Button href="#">Sign Up</Button>
                     </Navbar.Form>
                 </Navbar.Collapse>
             </Navbar>
