@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Option from './Option'
 import styles from './styles'
 import Choice from './Choice'
+import { FormGroup } from 'react-bootstrap'
 
 class Poll extends Component {
     render(){      
@@ -14,11 +15,11 @@ class Poll extends Component {
         return(
             <div style={style.container}>
                 <li style={style.list}>
-                    <h3 style={style.header}>{this.props.name}</h3>
+                    <h3 style={style.header}>{this.props.title}</h3>
                     <p>{this.props.question}</p>
-                    <ol>
+                    <FormGroup>
                         {options}
-                    </ol>
+                    </FormGroup>
                 </li>
             </div>
         )

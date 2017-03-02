@@ -3,6 +3,7 @@ import Poll from '../presentation/Poll'
 import Option from '../presentation/Option'
 import { FormGroup, FormControl, Button } from 'react-bootstrap'
 import styles from './styles'
+import Axios from 'axios'
 
 class Polls extends Component {
     constructor(){
@@ -14,22 +15,40 @@ class Polls extends Component {
             question: {
                 question: ''
             },
-            options: [],
-            polls: [
-                {name:"Poll 1", question:"Which is better apples or pears", options:["apples","pears"]},
-                {name:"Poll 2", questoin:"Which is better dogs or cats", options:["dogs", "cats"]}
-            ]
+            options: ['',''],
+            polls: []
         }
     }
 
+    componentDidMount(){
+        Axios
+        .get('/api/polls')
+        .then((res) => {
+            console.log(JSON.stringify(res.data))
+            this.setState({
+                polls: res.data
+            })
+        })
+        .catch((err) => console.log(err))
+    }
+
     addOption(event){
-        console.log("add option")
+        let options = this.state.options;
+        options.push('')
+        this.setState({options})
+    }
+
+    uploadPoll(poll){
+        Axios
+        .post('/api/polls', poll)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
     }
 
     createPoll(event){
-        console.log("create poll")
         var polls = this.state.polls;
-        polls.push({title: this.state.title, question: this.state.question, options: this.state.options})
+        var newPoll = {title: this.state.title, question: this.state.question, options: this.state.options}
+        polls.push(newPoll)
         this.setState({
             title: {
                 title: ''
@@ -37,11 +56,10 @@ class Polls extends Component {
             question: {
                 question: ''
             },
-            options: [],
+            options: ['',''],
             polls: polls
-        }, () => {
-            console.log(this.state)
         })
+        this.uploadPoll(newPoll)
     }
 
     updateField(event){
@@ -54,16 +72,19 @@ class Polls extends Component {
         let update = {
             options: currentOptions
         }
-        this.setState(update, () => {
-            console.log('state is now', this.state)
-        })
+        this.setState(update)
     }
 
     render(){
 
         const pollItems = this.state.polls.map((poll, i)  => {
             return(
-                <Poll key={poll.name} name={poll.name} question={poll.question} options={poll.options} />
+                <Poll key={poll.title} title={poll.title} question={poll.question} options={poll.options} />
+            )
+        })
+        const optionItems = this.state.options.map((option, i) => {
+            return(
+                <Option key={i} id={i.toString()} onChange={this.updateOption.bind(this)} />
             )
         })
         const style = styles.poll
@@ -78,8 +99,7 @@ class Polls extends Component {
                             <FormControl id="title" onChange={this.updateField.bind(this)} type="text" placeholder="Poll Title" />
                             <FormControl id="question" onChange={this.updateField.bind(this)} type="text" placeholder="Poll Question" />
                             <ul>
-                                <Option id="0" onChange={this.updateOption.bind(this)} />
-                                <Option id="1" onChange={this.updateOption.bind(this)} />
+                                {optionItems}
                             </ul>
                             {' '}
                             <Button onClick={this.addOption.bind(this)} type="submit">Add Option</Button>
