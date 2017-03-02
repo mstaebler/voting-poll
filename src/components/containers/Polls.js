@@ -14,7 +14,7 @@ class Polls extends Component {
             question: {
                 question: ''
             },
-            options: ['hello', 'googbye'],
+            options: [],
             polls: [
                 {name:"Poll 1", question:"Which is better apples or pears", options:["apples","pears"]},
                 {name:"Poll 2", questoin:"Which is better dogs or cats", options:["dogs", "cats"]}
@@ -28,17 +28,30 @@ class Polls extends Component {
 
     createPoll(event){
         console.log("create poll")
+        var polls = this.state.polls;
+        polls.push({title: this.state.title, question: this.state.question, options: this.state.options})
+        this.setState({
+            title: {
+                title: ''
+            },
+            question: {
+                question: ''
+            },
+            options: [],
+            polls: polls
+        }, () => {
+            console.log(this.state)
+        })
     }
 
     updateField(event){
-        this.setState({[event.target.id]: event.target.value})    
+        this.setState({[event.target.id]: event.target.value})  
     }
 
     updateOption(event){
-        console.log('inupdateoption')
-        currentOptions = this.state.options
+        let currentOptions = this.state.options
         currentOptions[Number(event.target.id)] = event.target.value
-        update = {
+        let update = {
             options: currentOptions
         }
         this.setState(update, () => {

@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import Option from './Option'
 import styles from './styles'
+import Choice from './Choice'
 
 class Poll extends Component {
     render(){      
         const options = this.props.options.map((option) => {
             return(
-                <Option key={option.toString()} option={option} />
+                <Choice key={option.toString()} option={option} />
             )
         }) 
         const style = styles.poll
