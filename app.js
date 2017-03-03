@@ -29,6 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api', api);
+app.use('/Signup', index);
+app.use('/DispalyPolls', index);
+app.use('/CreatePoll', index)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -11,8 +11,9 @@ class Home extends Component {
                 <Jumbotron>
                     <h1>VotePoll</h1>
                     <p>Create custom polls, vote and view results!</p>
-                </Jumbotron>   
-                <Polls />     
+                </Jumbotron>
+                {this.props.children}   
+                {/*<Polls />     */}
             </div>
             
         )

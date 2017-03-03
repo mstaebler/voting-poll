@@ -5,11 +5,10 @@ var controllers = require('../controllers');
 router.get('/:resource', (req, res, next) => {
     var resource = req.params.resource;
     var controller = controllers[resource];
-
-    if(controller === null){
-        console.log({
-            confirmation: 'fail',
-            message: 'Invalid resource request: ' + resource
+    
+    if(controller === undefined){
+        return res.json({
+            message: "404 resource not found"
         });
     }
 
@@ -21,10 +20,9 @@ router.get('/:resource/:id', (req, res, next) => {
     var id = req.params.id;
     var controller = controllers[resource];
 
-    if(controller === null){
-        console.log({
-            confirmation: 'fail',
-            message: 'Invalid resource request: ' + resource
+    if(controller === undefined){
+        return res.json({
+            message: "404 resource not found"
         });
     }
     
@@ -36,10 +34,9 @@ router.post('/:resource', (req, res, next) => {
     var resource = req.params.resource;
     var controller = controllers[resource];
 
-    if(controller === null){
-        console.log({
-            confirmation: 'fail',
-            message: 'Invalid resource request: ' + resource
+    if(controller === undefined){
+        return res.json({
+            message: "404 resource not found"
         });
     }
 

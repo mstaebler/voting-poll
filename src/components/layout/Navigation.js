@@ -1,21 +1,25 @@
 import React, { Component } from 'react'
 import { Navbar, Nav, NavItem, MenuItem, FormGroup, FormControl, Button } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
 class Navigation extends Component {
+    navidate(){
+
+    }
     render(){
         return(
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                 <Navbar.Brand>
-                    <a href="#">VotePoll</a>
+                    <a>VotePoll</a>
                 </Navbar.Brand>
                 <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
                     <Nav>
-                        <NavItem eventKey={1} href="#">Latest Polls</NavItem>
-                        <NavItem disabled eventKey={2} href="#">Create Poll</NavItem>
-                        <NavItem disabled eventKey={2} href="#">Edit Poll</NavItem>
+                        <LinkContainer to={{pathname: '/Polls'}}><NavItem>Latest Polls</NavItem></LinkContainer>
+                        <LinkContainer to={{pathname: '/CreatePoll'}}><NavItem>Create Poll</NavItem></LinkContainer>
+                        <LinkContainer to={{pathname: '/EditPoll'}}><NavItem>Edit Poll</NavItem></LinkContainer>
                     </Nav>
                     <Navbar.Form style={{marginRight:10}} pullRight>
                         <FormGroup>
@@ -24,7 +28,7 @@ class Navigation extends Component {
                             {' '}
                             <Button type="submit">Login</Button>
                         </FormGroup>
-                            <Button href="#">Sign Up</Button>
+                            <LinkContainer to={{pathname: '/Signup'}}><Button href="#/Signup">Sign Up</Button></LinkContainer>
                     </Navbar.Form>
                 </Navbar.Collapse>
             </Navbar>

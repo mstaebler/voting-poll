@@ -16873,7 +16873,7 @@ var Home = function (_Component) {
                         'Create custom polls, vote and view results!'
                     )
                 ),
-                _react2.default.createElement(_Polls2.default, null)
+                this.props.children
             );
         }
     }]);
@@ -17118,6 +17118,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = __webpack_require__(56);
 
+var _reactRouterBootstrap = __webpack_require__(537);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -17136,6 +17138,9 @@ var Navigation = function (_Component) {
     }
 
     _createClass(Navigation, [{
+        key: 'navidate',
+        value: function navidate() {}
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -17149,7 +17154,7 @@ var Navigation = function (_Component) {
                         null,
                         _react2.default.createElement(
                             'a',
-                            { href: '#' },
+                            null,
                             'VotePoll'
                         )
                     ),
@@ -17162,19 +17167,31 @@ var Navigation = function (_Component) {
                         _reactBootstrap.Nav,
                         null,
                         _react2.default.createElement(
-                            _reactBootstrap.NavItem,
-                            { eventKey: 1, href: '#' },
-                            'Latest Polls'
+                            _reactRouterBootstrap.LinkContainer,
+                            { to: { pathname: '/Polls' } },
+                            _react2.default.createElement(
+                                _reactBootstrap.NavItem,
+                                null,
+                                'Latest Polls'
+                            )
                         ),
                         _react2.default.createElement(
-                            _reactBootstrap.NavItem,
-                            { disabled: true, eventKey: 2, href: '#' },
-                            'Create Poll'
+                            _reactRouterBootstrap.LinkContainer,
+                            { to: { pathname: '/CreatePoll' } },
+                            _react2.default.createElement(
+                                _reactBootstrap.NavItem,
+                                null,
+                                'Create Poll'
+                            )
                         ),
                         _react2.default.createElement(
-                            _reactBootstrap.NavItem,
-                            { disabled: true, eventKey: 2, href: '#' },
-                            'Edit Poll'
+                            _reactRouterBootstrap.LinkContainer,
+                            { to: { pathname: '/EditPoll' } },
+                            _react2.default.createElement(
+                                _reactBootstrap.NavItem,
+                                null,
+                                'Edit Poll'
+                            )
                         )
                     ),
                     _react2.default.createElement(
@@ -17193,9 +17210,13 @@ var Navigation = function (_Component) {
                             )
                         ),
                         _react2.default.createElement(
-                            _reactBootstrap.Button,
-                            { href: '#' },
-                            'Sign Up'
+                            _reactRouterBootstrap.LinkContainer,
+                            { to: { pathname: '/Signup' } },
+                            _react2.default.createElement(
+                                _reactBootstrap.Button,
+                                { href: '#/Signup' },
+                                'Sign Up'
+                            )
                         )
                     )
                 )
@@ -40542,8 +40563,6 @@ function isReactComponent(component) {
 "use strict";
 
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -40558,41 +40577,49 @@ var _Home2 = _interopRequireDefault(_Home);
 
 var _reactRouter = __webpack_require__(507);
 
+var _CreatePoll = __webpack_require__(478);
+
+var _CreatePoll2 = _interopRequireDefault(_CreatePoll);
+
+var _EditPoll = __webpack_require__(533);
+
+var _EditPoll2 = _interopRequireDefault(_EditPoll);
+
+var _Signup = __webpack_require__(534);
+
+var _Signup2 = _interopRequireDefault(_Signup);
+
+var _Polls = __webpack_require__(201);
+
+var _Polls2 = _interopRequireDefault(_Polls);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var App = function (_Component) {
-    _inherits(App, _Component);
-
-    function App() {
-        _classCallCheck(this, App);
-
-        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
-    }
-
-    _createClass(App, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(_Home2.default, null)
-            );
-        }
-    }]);
-
-    return App;
-}(_react.Component);
+// import DisplayPolls from './components/presentation/DisplayPolls'
+var NotFound = function NotFound() {
+    return _react2.default.createElement(
+        'div',
+        { style: { textAlign: 'center', marginTop: 100 } },
+        _react2.default.createElement(
+            'h1',
+            null,
+            '404.. This page is not found!'
+        )
+    );
+};
 
 _reactDom2.default.render(_react2.default.createElement(
     _reactRouter.Router,
-    { history: _reactRouter.hashHistory },
-    _react2.default.createElement(_reactRouter.Route, { path: '/', component: App })
+    { history: _reactRouter.browserHistory },
+    _react2.default.createElement(
+        _reactRouter.Route,
+        { path: '/', component: _Home2.default },
+        _react2.default.createElement(_reactRouter.Route, { path: '/Polls', component: _Polls2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/CreatePoll', component: _CreatePoll2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/EditPoll', component: _EditPoll2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/Signup', component: _Signup2.default })
+    ),
+    _react2.default.createElement(_reactRouter.Route, { path: '*', component: NotFound })
 ), document.getElementById('root'));
 
 /***/ }),
@@ -42109,7 +42136,56 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 478 */,
+/* 478 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CreatePoll = function (_Component) {
+    _inherits(CreatePoll, _Component);
+
+    function CreatePoll() {
+        _classCallCheck(this, CreatePoll);
+
+        return _possibleConstructorReturn(this, (CreatePoll.__proto__ || Object.getPrototypeOf(CreatePoll)).apply(this, arguments));
+    }
+
+    _createClass(CreatePoll, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                'I am a CreatPoll'
+            );
+        }
+    }]);
+
+    return CreatePoll;
+}(_react.Component);
+
+exports.default = CreatePoll;
+
+/***/ }),
 /* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -46869,6 +46945,315 @@ module.exports = function (str) {
 	});
 };
 
+
+/***/ }),
+/* 533 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EditPoll = function (_Component) {
+    _inherits(EditPoll, _Component);
+
+    function EditPoll() {
+        _classCallCheck(this, EditPoll);
+
+        return _possibleConstructorReturn(this, (EditPoll.__proto__ || Object.getPrototypeOf(EditPoll)).apply(this, arguments));
+    }
+
+    _createClass(EditPoll, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                'I am a EditPoll'
+            );
+        }
+    }]);
+
+    return EditPoll;
+}(_react.Component);
+
+exports.default = EditPoll;
+
+/***/ }),
+/* 534 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Signup = function (_Component) {
+    _inherits(Signup, _Component);
+
+    function Signup() {
+        _classCallCheck(this, Signup);
+
+        return _possibleConstructorReturn(this, (Signup.__proto__ || Object.getPrototypeOf(Signup)).apply(this, arguments));
+    }
+
+    _createClass(Signup, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                'I am a signup'
+            );
+        }
+    }]);
+
+    return Signup;
+}(_react.Component);
+
+exports.default = Signup;
+
+/***/ }),
+/* 535 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // This is largely taken from react-router/lib/Link.
+
+function isLeftClickEvent(event) {
+  return event.button === 0;
+}
+
+function isModifiedEvent(event) {
+  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+}
+
+function createLocationDescriptor(to, query, hash, state) {
+  if (query || hash || state) {
+    return { pathname: to, query: query, hash: hash, state: state };
+  }
+
+  return to;
+}
+
+var propTypes = {
+  onlyActiveOnIndex: _react2.default.PropTypes.bool.isRequired,
+  to: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.object]).isRequired,
+  query: _react2.default.PropTypes.string,
+  hash: _react2.default.PropTypes.string,
+  state: _react2.default.PropTypes.object,
+  action: _react2.default.PropTypes.oneOf(['push', 'replace']).isRequired,
+  onClick: _react2.default.PropTypes.func,
+  active: _react2.default.PropTypes.bool,
+  target: _react2.default.PropTypes.string,
+  children: _react2.default.PropTypes.node.isRequired
+};
+
+var contextTypes = {
+  router: _react2.default.PropTypes.object
+};
+
+var defaultProps = {
+  onlyActiveOnIndex: false,
+  action: 'push'
+};
+
+var LinkContainer = function (_React$Component) {
+  _inherits(LinkContainer, _React$Component);
+
+  function LinkContainer() {
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, LinkContainer);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.onClick = function (event) {
+      var _this$props = _this.props;
+      var to = _this$props.to;
+      var query = _this$props.query;
+      var hash = _this$props.hash;
+      var state = _this$props.state;
+      var children = _this$props.children;
+      var onClick = _this$props.onClick;
+      var target = _this$props.target;
+      var action = _this$props.action;
+
+
+      if (children.props.onClick) {
+        children.props.onClick(event);
+      }
+
+      if (onClick) {
+        onClick(event);
+      }
+
+      if (target || event.defaultPrevented || isModifiedEvent(event) || !isLeftClickEvent(event)) {
+        return;
+      }
+
+      event.preventDefault();
+
+      _this.context.router[action](createLocationDescriptor(to, query, hash, state));
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  LinkContainer.prototype.render = function render() {
+    var router = this.context.router;
+    var _props = this.props;
+    var onlyActiveOnIndex = _props.onlyActiveOnIndex;
+    var to = _props.to;
+    var children = _props.children;
+
+    var props = _objectWithoutProperties(_props, ['onlyActiveOnIndex', 'to', 'children']);
+
+    props.onClick = this.onClick;
+
+    // Ignore if rendered outside Router context; simplifies unit testing.
+    if (router) {
+      props.href = router.createHref(to);
+
+      if (props.active == null) {
+        props.active = router.isActive(to, onlyActiveOnIndex);
+      }
+    }
+
+    return _react2.default.cloneElement(_react2.default.Children.only(children), props);
+  };
+
+  return LinkContainer;
+}(_react2.default.Component);
+
+LinkContainer.propTypes = propTypes;
+LinkContainer.contextTypes = contextTypes;
+LinkContainer.defaultProps = defaultProps;
+
+exports.default = LinkContainer;
+module.exports = exports['default'];
+
+/***/ }),
+/* 536 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _LinkContainer = __webpack_require__(535);
+
+var _LinkContainer2 = _interopRequireDefault(_LinkContainer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// Don't use a stateless function, to allow users to set a ref.
+/* eslint-disable react/prefer-stateless-function */
+var IndexLinkContainer = function (_React$Component) {
+  _inherits(IndexLinkContainer, _React$Component);
+
+  function IndexLinkContainer() {
+    _classCallCheck(this, IndexLinkContainer);
+
+    return _possibleConstructorReturn(this, _React$Component.apply(this, arguments));
+  }
+
+  IndexLinkContainer.prototype.render = function render() {
+    return _react2.default.createElement(_LinkContainer2.default, _extends({}, this.props, { onlyActiveOnIndex: true }));
+  };
+
+  return IndexLinkContainer;
+}(_react2.default.Component);
+/* eslint-enable react/prefer-stateless-function */
+
+
+exports.default = IndexLinkContainer;
+module.exports = exports['default'];
+
+/***/ }),
+/* 537 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.LinkContainer = exports.IndexLinkContainer = undefined;
+
+var _IndexLinkContainer2 = __webpack_require__(536);
+
+var _IndexLinkContainer3 = _interopRequireDefault(_IndexLinkContainer2);
+
+var _LinkContainer2 = __webpack_require__(535);
+
+var _LinkContainer3 = _interopRequireDefault(_LinkContainer2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.IndexLinkContainer = _IndexLinkContainer3.default;
+exports.LinkContainer = _LinkContainer3.default;
 
 /***/ })
 /******/ ]);
