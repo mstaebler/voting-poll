@@ -18,6 +18,7 @@ class CreatePoll extends Component{
             polls: []
         }
     }
+    
     addOption(event){
         let options = this.state.options;
         options.push('')

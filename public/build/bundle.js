@@ -40479,7 +40479,7 @@ var _Home2 = _interopRequireDefault(_Home);
 
 var _reactRouter = __webpack_require__(507);
 
-var _CreatePoll = __webpack_require__(478);
+var _CreatePoll = __webpack_require__(538);
 
 var _CreatePoll2 = _interopRequireDefault(_CreatePoll);
 
@@ -40497,7 +40497,6 @@ var _Polls2 = _interopRequireDefault(_Polls);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import DisplayPolls from './components/presentation/DisplayPolls'
 var NotFound = function NotFound() {
     return _react2.default.createElement(
         'div',
@@ -42038,177 +42037,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 478 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Option = __webpack_require__(127);
-
-var _Option2 = _interopRequireDefault(_Option);
-
-var _styles = __webpack_require__(206);
-
-var _styles2 = _interopRequireDefault(_styles);
-
-var _axios = __webpack_require__(460);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _reactBootstrap = __webpack_require__(56);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var CreatePoll = function (_Component) {
-    _inherits(CreatePoll, _Component);
-
-    function CreatePoll() {
-        _classCallCheck(this, CreatePoll);
-
-        var _this = _possibleConstructorReturn(this, (CreatePoll.__proto__ || Object.getPrototypeOf(CreatePoll)).call(this));
-
-        _this.state = {
-            title: {
-                title: ''
-            },
-            question: {
-                question: ''
-            },
-            options: ['', ''],
-            polls: []
-        };
-        return _this;
-    }
-
-    _createClass(CreatePoll, [{
-        key: 'addOption',
-        value: function addOption(event) {
-            var options = this.state.options;
-            options.push('');
-            this.setState({ options: options });
-        }
-    }, {
-        key: 'uploadPoll',
-        value: function uploadPoll(poll) {
-            _axios2.default.post('/api/polls', poll).then(function (res) {
-                return console.log(res);
-            }).catch(function (err) {
-                return console.log(err);
-            });
-        }
-    }, {
-        key: 'createPoll',
-        value: function createPoll(event) {
-            var polls = this.state.polls;
-            var newPoll = { title: this.state.title, question: this.state.question, options: this.state.options };
-            polls.push(newPoll);
-            this.setState({
-                title: {
-                    title: ''
-                },
-                question: {
-                    question: ''
-                },
-                options: ['', ''],
-                polls: polls
-            });
-            this.uploadPoll(newPoll);
-        }
-    }, {
-        key: 'updateField',
-        value: function updateField(event) {
-            this.setState(_defineProperty({}, event.target.id, event.target.value));
-        }
-    }, {
-        key: 'updateOption',
-        value: function updateOption(event) {
-            var currentOptions = this.state.options;
-            currentOptions[Number(event.target.id)] = event.target.value;
-            var update = {
-                options: currentOptions
-            };
-            this.setState(update);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var optionItems = this.state.options.map(function (option, i) {
-                return _react2.default.createElement(_Option2.default, { key: i, id: i.toString(), onChange: _this2.updateOption.bind(_this2) });
-            });
-            var style = _styles2.default.poll;
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'ul',
-                    null,
-                    _react2.default.createElement(
-                        'div',
-                        { style: style.container },
-                        _react2.default.createElement(
-                            'li',
-                            { style: style.list },
-                            _react2.default.createElement(
-                                'h3',
-                                { style: style.header },
-                                'Create Poll'
-                            ),
-                            _react2.default.createElement(
-                                _reactBootstrap.FormGroup,
-                                null,
-                                _react2.default.createElement(_reactBootstrap.FormControl, { id: 'title', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Poll Title' }),
-                                _react2.default.createElement(_reactBootstrap.FormControl, { id: 'question', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Poll Question' }),
-                                _react2.default.createElement(
-                                    'ul',
-                                    null,
-                                    optionItems
-                                ),
-                                ' ',
-                                _react2.default.createElement(
-                                    _reactBootstrap.Button,
-                                    { onClick: this.addOption.bind(this), type: 'submit' },
-                                    'Add Option'
-                                ),
-                                _react2.default.createElement(
-                                    _reactBootstrap.Button,
-                                    { onClick: this.createPoll.bind(this), type: 'submit' },
-                                    'Create Poll'
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return CreatePoll;
-}(_react.Component);
-
-exports.default = CreatePoll;
-
-/***/ }),
+/* 478 */,
 /* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -47277,6 +47106,177 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.IndexLinkContainer = _IndexLinkContainer3.default;
 exports.LinkContainer = _LinkContainer3.default;
+
+/***/ }),
+/* 538 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Option = __webpack_require__(127);
+
+var _Option2 = _interopRequireDefault(_Option);
+
+var _styles = __webpack_require__(202);
+
+var _styles2 = _interopRequireDefault(_styles);
+
+var _axios = __webpack_require__(460);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _reactBootstrap = __webpack_require__(56);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CreatePoll = function (_Component) {
+    _inherits(CreatePoll, _Component);
+
+    function CreatePoll() {
+        _classCallCheck(this, CreatePoll);
+
+        var _this = _possibleConstructorReturn(this, (CreatePoll.__proto__ || Object.getPrototypeOf(CreatePoll)).call(this));
+
+        _this.state = {
+            title: {
+                title: ''
+            },
+            question: {
+                question: ''
+            },
+            options: ['', ''],
+            polls: []
+        };
+        return _this;
+    }
+
+    _createClass(CreatePoll, [{
+        key: 'addOption',
+        value: function addOption(event) {
+            var options = this.state.options;
+            options.push('');
+            this.setState({ options: options });
+        }
+    }, {
+        key: 'uploadPoll',
+        value: function uploadPoll(poll) {
+            _axios2.default.post('/api/polls', poll).then(function (res) {
+                return console.log(res);
+            }).catch(function (err) {
+                return console.log(err);
+            });
+        }
+    }, {
+        key: 'createPoll',
+        value: function createPoll(event) {
+            var polls = this.state.polls;
+            var newPoll = { title: this.state.title, question: this.state.question, options: this.state.options };
+            polls.push(newPoll);
+            this.setState({
+                title: {
+                    title: ''
+                },
+                question: {
+                    question: ''
+                },
+                options: ['', ''],
+                polls: polls
+            });
+            this.uploadPoll(newPoll);
+        }
+    }, {
+        key: 'updateField',
+        value: function updateField(event) {
+            this.setState(_defineProperty({}, event.target.id, event.target.value));
+        }
+    }, {
+        key: 'updateOption',
+        value: function updateOption(event) {
+            var currentOptions = this.state.options;
+            currentOptions[Number(event.target.id)] = event.target.value;
+            var update = {
+                options: currentOptions
+            };
+            this.setState(update);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var optionItems = this.state.options.map(function (option, i) {
+                return _react2.default.createElement(_Option2.default, { key: i, id: i.toString(), onChange: _this2.updateOption.bind(_this2) });
+            });
+            var style = _styles2.default.poll;
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    _react2.default.createElement(
+                        'div',
+                        { style: style.container },
+                        _react2.default.createElement(
+                            'li',
+                            { style: style.list },
+                            _react2.default.createElement(
+                                'h3',
+                                { style: style.header },
+                                'Create Poll'
+                            ),
+                            _react2.default.createElement(
+                                _reactBootstrap.FormGroup,
+                                null,
+                                _react2.default.createElement(_reactBootstrap.FormControl, { id: 'title', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Poll Title' }),
+                                _react2.default.createElement(_reactBootstrap.FormControl, { id: 'question', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Poll Question' }),
+                                _react2.default.createElement(
+                                    'ul',
+                                    null,
+                                    optionItems
+                                ),
+                                ' ',
+                                _react2.default.createElement(
+                                    _reactBootstrap.Button,
+                                    { onClick: this.addOption.bind(this), type: 'submit' },
+                                    'Add Option'
+                                ),
+                                _react2.default.createElement(
+                                    _reactBootstrap.Button,
+                                    { onClick: this.createPoll.bind(this), type: 'submit' },
+                                    'Create Poll'
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return CreatePoll;
+}(_react.Component);
+
+exports.default = CreatePoll;
 
 /***/ })
 /******/ ]);
