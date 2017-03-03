@@ -47287,7 +47287,23 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Option = __webpack_require__(89);
+
+var _Option2 = _interopRequireDefault(_Option);
+
+var _styles = __webpack_require__(153);
+
+var _styles2 = _interopRequireDefault(_styles);
+
+var _axios = __webpack_require__(147);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _reactBootstrap = __webpack_require__(36);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -47301,16 +47317,82 @@ var Signup = function (_Component) {
     function Signup() {
         _classCallCheck(this, Signup);
 
-        return _possibleConstructorReturn(this, (Signup.__proto__ || Object.getPrototypeOf(Signup)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Signup.__proto__ || Object.getPrototypeOf(Signup)).call(this));
+
+        _this.state = {
+            email: '',
+            password: ''
+        };
+        return _this;
     }
 
     _createClass(Signup, [{
+        key: 'validate',
+        value: function validate(_ref) {
+            var title = _ref.title,
+                question = _ref.question,
+                options = _ref.options;
+
+            if (title.length > 0 && question.length > 0 && options[0] !== '' && options[1] !== '') {
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: 'createAccount',
+        value: function createAccount(event) {
+            var polls = this.state.polls;
+            var newPoll = { title: this.state.title, question: this.state.question, options: this.state.options };
+            if (this.validate(newPoll)) {
+                polls.push(newPoll);
+                this.setState({
+                    title: {
+                        title: ''
+                    },
+                    question: {
+                        question: ''
+                    },
+                    options: ['', ''],
+                    polls: polls
+                });
+                this.uploadPoll(newPoll);
+            } else {
+                console.log('invalid poll');
+            }
+        }
+    }, {
+        key: 'updateField',
+        value: function updateField(event) {
+            this.setState(_defineProperty({}, event.target.id, event.target.value));
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var style = _styles2.default.poll;
             return _react2.default.createElement(
                 'div',
-                null,
-                'I am a signup'
+                { style: style.container },
+                _react2.default.createElement(
+                    'li',
+                    { style: style.list },
+                    _react2.default.createElement(
+                        'h3',
+                        { style: style.header },
+                        'Create Account'
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.FormGroup,
+                        null,
+                        _react2.default.createElement(_reactBootstrap.FormControl, { id: 'email', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Email' }),
+                        _react2.default.createElement(_reactBootstrap.FormControl, { id: 'password', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Password' }),
+                        ' ',
+                        _react2.default.createElement(
+                            _reactBootstrap.Button,
+                            { onClick: this.createAccount.bind(this), type: 'submit' },
+                            'Create Account'
+                        )
+                    )
+                )
             );
         }
     }]);
