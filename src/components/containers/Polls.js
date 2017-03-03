@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Poll from '../presentation/Poll'
 import Option from '../presentation/Option'
-import { FormGroup, FormControl, Button } from 'react-bootstrap'
+import DisplayPolls from '../presentation/DisplayPolls'
 import styles from './styles'
 import Axios from 'axios'
+import { FormGroup, FormControl, Button } from 'react-bootstrap'
 
 class Polls extends Component {
     constructor(){
@@ -24,7 +24,6 @@ class Polls extends Component {
         Axios
         .get('/api/polls')
         .then((res) => {
-            console.log(JSON.stringify(res.data))
             this.setState({
                 polls: res.data
             })
@@ -76,12 +75,6 @@ class Polls extends Component {
     }
 
     render(){
-
-        const pollItems = this.state.polls.map((poll, i)  => {
-            return(
-                <Poll key={poll.title} title={poll.title} question={poll.question} options={poll.options} />
-            )
-        })
         const optionItems = this.state.options.map((option, i) => {
             return(
                 <Option key={i} id={i.toString()} onChange={this.updateOption.bind(this)} />
@@ -91,21 +84,21 @@ class Polls extends Component {
         return(
             <div>
                 <ul>
-                    {pollItems}           
+                    <DisplayPolls polls={this.state.polls} />          
                     <div style={style.container}>
-                    <li style={style.list}>
-                        <h3 style={style.header}>Create Poll</h3>
-                        <FormGroup>
-                            <FormControl id="title" onChange={this.updateField.bind(this)} type="text" placeholder="Poll Title" />
-                            <FormControl id="question" onChange={this.updateField.bind(this)} type="text" placeholder="Poll Question" />
-                            <ul>
-                                {optionItems}
-                            </ul>
-                            {' '}
-                            <Button onClick={this.addOption.bind(this)} type="submit">Add Option</Button>
-                            <Button onClick={this.createPoll.bind(this)} type="submit">Create Poll</Button>
-                        </FormGroup>
-                    </li>
+                        <li style={style.list}>
+                            <h3 style={style.header}>Create Poll</h3>
+                            <FormGroup>
+                                <FormControl id="title" onChange={this.updateField.bind(this)} type="text" placeholder="Poll Title" />
+                                <FormControl id="question" onChange={this.updateField.bind(this)} type="text" placeholder="Poll Question" />
+                                <ul>
+                                    {optionItems}
+                                </ul>
+                                {' '}
+                                <Button onClick={this.addOption.bind(this)} type="submit">Add Option</Button>
+                                <Button onClick={this.createPoll.bind(this)} type="submit">Create Poll</Button>
+                            </FormGroup>
+                        </li>
                     </div>
                 </ul>
             </div>

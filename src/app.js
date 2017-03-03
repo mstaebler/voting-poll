@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Home from './components/layout/Home'
+import { Router, Route, IndexRoute, hashHistory } from 'react-router'
 
 class App extends Component {
 
@@ -13,4 +14,9 @@ class App extends Component {
     }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(
+    <Router history={hashHistory}>
+        <Route path="/" component={App}>
+        </Route>
+    </Router>
+    , document.getElementById('root'))
