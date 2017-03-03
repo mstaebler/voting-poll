@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import DisplayPolls from '../presentation/DisplayPolls'
+import DisplayEdit from '../presentation/DisplayEdit'
 import styles from './styles'
 import Axios from 'axios'
 
-class Polls extends Component {
+class EditPoll extends Component{
     constructor(){
         super()
         this.state = {
@@ -27,11 +27,11 @@ class Polls extends Component {
         return(
             <div>
                 <ul>
-                    <DisplayPolls polls={this.state.polls} />          
+                    <DisplayEdit polls={this.state.polls} />          
                 </ul>
             </div>
         )
     }
 }
 
-export default Polls
+export default EditPoll

@@ -29,10 +29,7 @@ class CreatePoll extends Component{
     }
 
     validate({title, question, options}){
-        console.log('title: ',title,' question: ',question,' options: ',options)
-        
         if(title.length > 0 && question.length > 0 && options[0] !== '' && options[1] !== ''){
-            console.log('passed')
             return true
         }
         return false

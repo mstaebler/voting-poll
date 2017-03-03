@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import Home from './components/layout/Home'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import CreatePoll from './components/containers/CreatePoll'
-import EditPoll from './components/presentation/EditPoll'
-import Signup from './components/presentation/Signup'
+import EditPoll from './components/containers/EditPoll'
+import Signup from './components/containers/Signup'
 import Polls from './components/containers/Polls'
 
 const NotFound = () => (
