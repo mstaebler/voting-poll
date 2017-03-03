@@ -8,12 +8,8 @@ class CreatePoll extends Component{
     constructor(){
         super()
         this.state = {
-            title: {
-                title: ''
-            },
-            question: {
-                question: ''
-            },
+            title: '',
+            question: '',
             options: ['',''],
             polls: []
         }
@@ -33,7 +29,10 @@ class CreatePoll extends Component{
     }
 
     validate({title, question, options}){
-        if(title.length > 0 && question.length > 0 && options.length > 1){
+        console.log('title: ',title,' question: ',question,' options: ',options)
+        
+        if(title.length > 0 && question.length > 0 && options[0] !== '' && options[1] !== ''){
+            console.log('passed')
             return true
         }
         return false
