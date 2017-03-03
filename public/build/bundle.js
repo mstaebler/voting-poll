@@ -47186,22 +47186,38 @@ var CreatePoll = function (_Component) {
             });
         }
     }, {
+        key: 'validate',
+        value: function validate(_ref) {
+            var title = _ref.title,
+                question = _ref.question,
+                options = _ref.options;
+
+            if (title.length > 0 && question.length > 0 && options.length > 1) {
+                return true;
+            }
+            return false;
+        }
+    }, {
         key: 'createPoll',
         value: function createPoll(event) {
             var polls = this.state.polls;
             var newPoll = { title: this.state.title, question: this.state.question, options: this.state.options };
-            polls.push(newPoll);
-            this.setState({
-                title: {
-                    title: ''
-                },
-                question: {
-                    question: ''
-                },
-                options: ['', ''],
-                polls: polls
-            });
-            this.uploadPoll(newPoll);
+            if (this.validate(newPoll)) {
+                polls.push(newPoll);
+                this.setState({
+                    title: {
+                        title: ''
+                    },
+                    question: {
+                        question: ''
+                    },
+                    options: ['', ''],
+                    polls: polls
+                });
+                this.uploadPoll(newPoll);
+            } else {
+                console.log('invalid poll');
+            }
         }
     }, {
         key: 'updateField',

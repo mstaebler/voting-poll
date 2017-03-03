@@ -32,21 +32,34 @@ class CreatePoll extends Component{
         .catch((err) => console.log(err))
     }
 
+    validate({title, question, options}){
+        if(title.length > 0 && question.length > 0 && options.length > 1){
+            return true
+        }
+        return false
+    }
+
     createPoll(event){
         var polls = this.state.polls;
         var newPoll = {title: this.state.title, question: this.state.question, options: this.state.options}
-        polls.push(newPoll)
-        this.setState({
-            title: {
-                title: ''
-            },
-            question: {
-                question: ''
-            },
-            options: ['',''],
-            polls: polls
-        })
-        this.uploadPoll(newPoll)
+        if(this.validate(newPoll)){
+            polls.push(newPoll)
+            this.setState({
+                title: {
+                    title: ''
+                },
+                question: {
+                    question: ''
+                },
+                options: ['',''],
+                polls: polls
+            })
+            this.uploadPoll(newPoll)
+        }
+        else{
+            console.log('invalid poll')
+        }
+        
     }
 
     updateField(event){
