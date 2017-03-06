@@ -19,7 +19,7 @@ class Navigation extends Component {
                     <Nav>
                         <LinkContainer to={{pathname: '/Polls'}}><NavItem>Latest Polls</NavItem></LinkContainer>
                         <LinkContainer to={{pathname: '/CreatePoll'}}><NavItem>Create Poll</NavItem></LinkContainer>
-                        <LinkContainer to={{pathname: '/EditPoll'}}><NavItem>Edit Poll</NavItem></LinkContainer>
+                        <LinkContainer to={{pathname: '/DeletePoll'}}><NavItem>Delete Poll</NavItem></LinkContainer>
                     </Nav>
                     <Navbar.Form style={{marginRight:10}} pullRight>
                         <FormGroup>

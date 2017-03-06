@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import styles from './styles'
 import { FormGroup, FormControl, Button, Panel } from 'react-bootstrap'
 
-class DisplayEdit extends Component{
+class DeleteButton extends Component{
     render(){
         const pollItems = this.props.polls.map((poll, i)  => {
             return(
                 <Panel key={i}>
-                    <button style={{marginRight:50}}>Edit</button>
+                    <button id={poll._id} style={{marginRight:50}} onClick={this.props.click}>Delete</button>
                     {poll.title}
                 </Panel>
             )
@@ -21,4 +21,4 @@ class DisplayEdit extends Component{
     }
 }
 
-export default DisplayEdit
+export default DeleteButton

@@ -44,4 +44,19 @@ router.post('/:resource', (req, res, next) => {
     
 });
 
+router.delete('/:resource/:id', (req, res, next) => {
+    var resource = req.params.resource;
+    var id = req.params.id;
+    var controller = controllers[resource];
+
+    if(controller === undefined){
+        return res.json({
+            message: "404 resource not found"
+        });
+    }
+    
+    return controller.delete(id).then(doc => res.json(doc));
+    
+});
+
 module.exports = router;

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import Home from './components/layout/Home'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import CreatePoll from './components/containers/CreatePoll'
-import EditPoll from './components/containers/EditPoll'
+import DeletePoll from './components/containers/DeletePoll'
 import Signup from './components/containers/Signup'
 import Polls from './components/containers/Polls'
 
@@ -18,7 +18,7 @@ ReactDOM.render(
         <Route path="/" component={Home}>
             <Route path="/Polls" component={Polls} />
             <Route path="/CreatePoll" component={CreatePoll} />
-            <Route path="/EditPoll" component={EditPoll} />
+            <Route path="/DeletePoll" component={DeletePoll} />
             <Route path="/Signup" component={Signup} />
         </Route>
         <Route path="*" component={NotFound} />

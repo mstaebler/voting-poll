@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import DisplayEdit from '../presentation/DisplayEdit'
+import DeleteButton from '../presentation/DeleteButton'
 import styles from './styles'
 import Axios from 'axios'
 
-class EditPoll extends Component{
+class DeletePoll extends Component{
     constructor(){
         super()
         this.state = {
@@ -12,9 +12,14 @@ class EditPoll extends Component{
     }
 
     componentDidMount(){
+        this.getPolls()
+    }
+
+    getPolls(){
         Axios
         .get('/api/polls')
         .then((res) => {
+            console.log(res)
             this.setState({
                 polls: res.data
             })
@@ -22,16 +27,27 @@ class EditPoll extends Component{
         .catch((err) => console.log(err))
     }
 
+    deletePoll(event){
+        console.log(`/api/polls/${event.target.id}`)
+        Axios
+        .delete(`/api/polls/${event.target.id}`)
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => console.log(err))
+        this.getPolls()
+    }
+
     render(){
         const style = styles.poll
         return(
             <div>
                 <ul>
-                    <DisplayEdit polls={this.state.polls} />          
+                    <DeleteButton click={this.deletePoll.bind(this)} polls={this.state.polls} />          
                 </ul>
             </div>
         )
     }
 }
 
-export default EditPoll
+export default DeletePoll

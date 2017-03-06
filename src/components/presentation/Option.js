@@ -6,7 +6,7 @@ class Option extends Component {
         return(
             <div>
                 <li style={{listStyleType: 'none'}} >
-                    <FormControl type="text" placeholder="Option" onChange={this.props.onChange} id={this.props.id} />
+                    <FormControl type="text" placeholder="Option" onChange={this.props.onChange} id={this.props.id} value= {this.props.value} />
                 </li>
             </div>
         )

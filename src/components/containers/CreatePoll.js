@@ -41,12 +41,8 @@ class CreatePoll extends Component{
         if(this.validate(newPoll)){
             polls.push(newPoll)
             this.setState({
-                title: {
-                    title: ''
-                },
-                question: {
-                    question: ''
-                },
+                    title: '',
+                    question: '',
                 options: ['',''],
                 polls: polls
             })
@@ -73,7 +69,7 @@ class CreatePoll extends Component{
     render(){
         const optionItems = this.state.options.map((option, i) => {
             return(
-                <Option key={i} id={i.toString()} onChange={this.updateOption.bind(this)} />
+                <Option key={i} id={i.toString()} onChange={this.updateOption.bind(this)} value= {this.state.options[i]} />
             )
         })
         const style = styles.poll
@@ -84,8 +80,8 @@ class CreatePoll extends Component{
                         <li style={style.list}>
                             <h3 style={style.header}>Create Poll</h3>
                             <FormGroup>
-                                <FormControl id="title" onChange={this.updateField.bind(this)} type="text" placeholder="Poll Title" />
-                                <FormControl id="question" onChange={this.updateField.bind(this)} type="text" placeholder="Poll Question" />
+                                <FormControl id="title" onChange={this.updateField.bind(this)} type="text" placeholder="Poll Title" value= {this.state.title} />
+                                <FormControl id="question" onChange={this.updateField.bind(this)} type="text" placeholder="Poll Question" value= {this.state.question} />
                                 <ul>
                                     {optionItems}
                                 </ul>

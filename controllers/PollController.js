@@ -29,7 +29,7 @@ module.exports = {
     },
 
     delete: (id) => {
-        return Promise.resolve(db.findOneAndDelete({_id: ObjectId(id)}.toArray()));
+        return Promise.resolve(db.findOneAndDelete({_id: ObjectId(id)}));
     }
 
 }
