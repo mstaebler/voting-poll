@@ -17,6 +17,12 @@ module.exports = {
         return Promise.resolve(config.polls.insertOne(params));
     },
 
+    update: (params) => {
+        var poll = params;
+        poll._id = ObjectId(params._id);
+        return Promise.resolve(config.polls.findOneAndUpdate({_id: ObjectId(params._id)},poll));
+    },
+
     delete: (id) => {
         return Promise.resolve(config.polls.findOneAndDelete({_id: ObjectId(id)}));
     }

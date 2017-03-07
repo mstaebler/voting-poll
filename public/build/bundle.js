@@ -20002,7 +20002,13 @@ var CreatePoll = function (_Component) {
         key: 'createPoll',
         value: function createPoll(event) {
             var polls = this.state.polls;
-            var newPoll = { username: this.state.username, title: this.state.title, question: this.state.question, options: this.state.options };
+            var newPoll = {
+                username: this.state.username,
+                title: this.state.title,
+                question: this.state.question,
+                options: this.state.options,
+                answers: {}
+            };
             if (this.validate(newPoll)) {
                 polls.push(newPoll);
                 this.setState({
@@ -20092,106 +20098,7 @@ var CreatePoll = function (_Component) {
 exports.default = CreatePoll;
 
 /***/ }),
-/* 238 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _DeleteButton = __webpack_require__(261);
-
-var _DeleteButton2 = _interopRequireDefault(_DeleteButton);
-
-var _styles = __webpack_require__(72);
-
-var _styles2 = _interopRequireDefault(_styles);
-
-var _axios = __webpack_require__(71);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var DeletePoll = function (_Component) {
-    _inherits(DeletePoll, _Component);
-
-    function DeletePoll() {
-        _classCallCheck(this, DeletePoll);
-
-        var _this = _possibleConstructorReturn(this, (DeletePoll.__proto__ || Object.getPrototypeOf(DeletePoll)).call(this));
-
-        _this.state = {
-            polls: []
-        };
-        return _this;
-    }
-
-    _createClass(DeletePoll, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.getPolls();
-        }
-    }, {
-        key: 'getPolls',
-        value: function getPolls() {
-            var _this2 = this;
-
-            _axios2.default.get('/api/polls').then(function (res) {
-                _this2.setState({
-                    polls: res.data
-                });
-            }).catch(function (err) {
-                return console.log(err);
-            });
-        }
-    }, {
-        key: 'deletePoll',
-        value: function deletePoll(event) {
-            _axios2.default.delete('/api/polls/' + event.target.id).then(function (res) {
-                console.log(res);
-            }).catch(function (err) {
-                return console.log(err);
-            });
-            this.getPolls();
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var style = _styles2.default.poll;
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'ul',
-                    null,
-                    _react2.default.createElement(_DeleteButton2.default, { click: this.deletePoll.bind(this), polls: this.state.polls })
-                )
-            );
-        }
-    }]);
-
-    return DeletePoll;
-}(_react.Component);
-
-exports.default = DeletePoll;
-
-/***/ }),
+/* 238 */,
 /* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20247,7 +20154,11 @@ var Polls = function (_Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            _axios2.default.get('/api/polls').then(function (res) {
+            var url = '/api/polls';
+            if (this.props.location.query.username) {
+                url = '/api/polls?username=' + this.props.location.query.username;
+            }
+            _axios2.default.get(url).then(function (res) {
                 _this2.setState({
                     polls: res.data
                 });
@@ -20467,8 +20378,6 @@ var Home = function (_Component) {
             this.setState({
                 loggedIn: bool,
                 username: username || ''
-            }, function () {
-                console.log('state updated ', this.state);
             });
         }
     }, {
@@ -21488,7 +21397,7 @@ var Choice = function (_Component) {
         value: function render() {
             return _react2.default.createElement(
                 _reactBootstrap.Radio,
-                { name: 'choice', inline: true },
+                { name: 'choice', onChange: this.props.onChange, value: this.props.value, inline: true },
                 this.props.option
             );
         }
@@ -21545,17 +21454,27 @@ var DeleteButton = function (_Component) {
             var _this2 = this;
 
             var pollItems = this.props.polls.map(function (poll, i) {
+                var answers = [];
+                Object.keys(poll.answers).map(function (key, i) {
+                    answers.push(key + ': ' + poll.answers[key]);
+                });
                 return _react2.default.createElement(
                     _reactBootstrap.Panel,
                     { key: i },
                     _react2.default.createElement(
-                        'button',
+                        _reactBootstrap.Button,
                         { id: poll._id, style: { marginRight: 50 }, onClick: _this2.props.click },
                         'Delete'
                     ),
-                    poll.title
+                    poll.title,
+                    _react2.default.createElement(
+                        'span',
+                        { style: { float: 'right' } },
+                        answers
+                    )
                 );
             });
+
             var style = _styles2.default.poll;
             return _react2.default.createElement(
                 'div',
@@ -21618,7 +21537,7 @@ var DisplayPolls = function (_Component) {
         key: 'render',
         value: function render() {
             var pollItems = this.props.polls.map(function (poll, i) {
-                return _react2.default.createElement(_Poll2.default, { key: poll.title, username: poll.username, title: poll.title, question: poll.question, options: poll.options });
+                return _react2.default.createElement(_Poll2.default, { _id: poll._id, key: poll._id, username: poll.username, title: poll.title, question: poll.question, options: poll.options, answers: poll.answers });
             });
             var style = _styles2.default.poll;
             return _react2.default.createElement(
@@ -21665,6 +21584,10 @@ var _Choice2 = _interopRequireDefault(_Choice);
 
 var _reactBootstrap = __webpack_require__(40);
 
+var _axios = __webpack_require__(71);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21679,14 +21602,77 @@ var Poll = function (_Component) {
     function Poll() {
         _classCallCheck(this, Poll);
 
-        return _possibleConstructorReturn(this, (Poll.__proto__ || Object.getPrototypeOf(Poll)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Poll.__proto__ || Object.getPrototypeOf(Poll)).call(this));
+
+        _this.state = {
+            voted: false
+        };
+        return _this;
     }
 
     _createClass(Poll, [{
+        key: 'updatePoll',
+        value: function updatePoll(poll) {
+            _axios2.default.put('/api/polls', poll).then(function (res) {
+                return console.log(res);
+            }).catch(function (err) {
+                return console.log(err);
+            });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.setState({
+                answers: this.props.answers
+            });
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(event) {
+            if (!this.state.voted) {
+                if (this.state.answers[event.target.value]) {
+                    var newAnswers = Object.assign({}, this.state.answers);
+                    newAnswers[event.target.value] += 1;
+                    this.setState({
+                        voted: true,
+                        answers: newAnswers
+                    }, function () {
+                        var poll = {
+                            _id: this.props._id,
+                            title: this.props.title,
+                            question: this.props.question,
+                            options: this.props.options,
+                            answers: this.state.answers
+                        };
+                        this.updatePoll(poll);
+                    });
+                } else {
+                    var newAnswers = Object.assign({}, this.state.answers);
+                    newAnswers[event.target.value] = 1;
+                    this.setState({
+                        voted: true,
+                        answers: newAnswers
+                    }, function () {
+                        var poll = {
+                            _id: this.props._id,
+                            title: this.props.title,
+                            question: this.props.question,
+                            options: this.props.options,
+                            username: localStorage.username,
+                            answers: this.state.answers
+                        };
+                        this.updatePoll(poll);
+                    });
+                }
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var options = this.props.options.map(function (option) {
-                return _react2.default.createElement(_Choice2.default, { key: option.toString(), option: option });
+            var _this2 = this;
+
+            var options = this.props.options.map(function (option, i) {
+                return _react2.default.createElement(_Choice2.default, { onChange: _this2.onChange.bind(_this2), key: option.toString(), value: option, option: option });
             });
             var style = _styles2.default.poll;
             return _react2.default.createElement(
@@ -47150,9 +47136,9 @@ var _CreatePoll = __webpack_require__(237);
 
 var _CreatePoll2 = _interopRequireDefault(_CreatePoll);
 
-var _DeletePoll = __webpack_require__(238);
+var _YourPolls = __webpack_require__(540);
 
-var _DeletePoll2 = _interopRequireDefault(_DeletePoll);
+var _YourPolls2 = _interopRequireDefault(_YourPolls);
 
 var _Signup = __webpack_require__(240);
 
@@ -47197,7 +47183,7 @@ _reactDom2.default.render(_react2.default.createElement(
         { path: '/', component: _Home2.default },
         _react2.default.createElement(_reactRouter.Route, { path: '/Polls', component: _Polls2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: '/CreatePoll', component: _CreatePoll2.default, onEnter: requireAuth }),
-        _react2.default.createElement(_reactRouter.Route, { path: '/DeletePoll', component: _DeletePoll2.default, onEnter: requireAuth }),
+        _react2.default.createElement(_reactRouter.Route, { path: '/YourPolls', component: _YourPolls2.default, onEnter: requireAuth }),
         _react2.default.createElement(_reactRouter.Route, { path: '/Signup', component: _Signup2.default })
     ),
     _react2.default.createElement(_reactRouter.Route, { path: '*', component: NotFound })
@@ -47300,7 +47286,7 @@ var Navigation = function (_Component) {
                 _react2.default.createElement(
                     _reactBootstrap.Navbar.Collapse,
                     null,
-                    _react2.default.createElement(
+                    this.state.loggedIn && _react2.default.createElement(
                         _reactBootstrap.Nav,
                         null,
                         _react2.default.createElement(
@@ -47323,11 +47309,24 @@ var Navigation = function (_Component) {
                         ),
                         _react2.default.createElement(
                             _reactRouterBootstrap.LinkContainer,
-                            { to: { pathname: '/DeletePoll' } },
+                            { to: { pathname: '/YourPolls' } },
                             _react2.default.createElement(
                                 _reactBootstrap.NavItem,
                                 null,
-                                'Delete Poll'
+                                'Your Polls'
+                            )
+                        )
+                    ),
+                    !this.state.loggedIn && _react2.default.createElement(
+                        _reactBootstrap.Nav,
+                        null,
+                        _react2.default.createElement(
+                            _reactRouterBootstrap.LinkContainer,
+                            { to: { pathname: '/Polls' } },
+                            _react2.default.createElement(
+                                _reactBootstrap.NavItem,
+                                null,
+                                'Latest Polls'
                             )
                         )
                     ),
@@ -47640,6 +47639,122 @@ module.exports = {
     },
     onChange: function onChange() {}
 };
+
+/***/ }),
+/* 540 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _DeleteButton = __webpack_require__(261);
+
+var _DeleteButton2 = _interopRequireDefault(_DeleteButton);
+
+var _styles = __webpack_require__(72);
+
+var _styles2 = _interopRequireDefault(_styles);
+
+var _axios = __webpack_require__(71);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _reactBootstrap = __webpack_require__(40);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var YourPolls = function (_Component) {
+    _inherits(YourPolls, _Component);
+
+    function YourPolls() {
+        _classCallCheck(this, YourPolls);
+
+        var _this = _possibleConstructorReturn(this, (YourPolls.__proto__ || Object.getPrototypeOf(YourPolls)).call(this));
+
+        _this.state = {
+            polls: []
+        };
+        return _this;
+    }
+
+    _createClass(YourPolls, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.getPolls();
+        }
+    }, {
+        key: 'getPolls',
+        value: function getPolls() {
+            var _this2 = this;
+
+            _axios2.default.get('/api/polls?username=' + localStorage.username).then(function (res) {
+                _this2.setState({
+                    polls: res.data
+                });
+            }).catch(function (err) {
+                return console.log(err);
+            });
+        }
+    }, {
+        key: 'deletePoll',
+        value: function deletePoll(event) {
+            _axios2.default.delete('/api/polls/' + event.target.id).then(function (res) {
+                console.log(res);
+            }).catch(function (err) {
+                return console.log(err);
+            });
+            this.getPolls();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var style = _styles2.default.poll;
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    _reactBootstrap.Panel,
+                    null,
+                    'Share your polls with your friends!',
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        _react2.default.createElement(
+                            'a',
+                            { href: '/Polls?username=' + localStorage.username },
+                            'link to your polls'
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'ul',
+                    null,
+                    _react2.default.createElement(_DeleteButton2.default, { click: this.deletePoll.bind(this), polls: this.state.polls })
+                )
+            );
+        }
+    }]);
+
+    return YourPolls;
+}(_react.Component);
+
+exports.default = YourPolls;
 
 /***/ })
 /******/ ]);

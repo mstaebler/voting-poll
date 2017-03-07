@@ -38,7 +38,13 @@ class CreatePoll extends Component{
 
     createPoll(event){
         var polls = this.state.polls;
-        var newPoll = {username: this.state.username, title: this.state.title, question: this.state.question, options: this.state.options}
+        var newPoll = {
+            username: this.state.username, 
+            title: this.state.title, 
+            question: this.state.question, 
+            options: this.state.options, 
+            answers: {}
+        }
         if(this.validate(newPoll)){
             polls.push(newPoll)
             this.setState({

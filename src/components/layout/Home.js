@@ -19,8 +19,6 @@ class Home extends Component {
         this.setState({
             loggedIn: bool,
             username: username || ''
-        },function(){
-            console.log('state updated ', this.state)
         })
         
     }

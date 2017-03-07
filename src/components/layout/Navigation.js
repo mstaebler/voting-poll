@@ -42,11 +42,18 @@ class Navigation extends Component {
                 <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
+                    {this.state.loggedIn &&
                     <Nav>
                         <LinkContainer to={{pathname: '/Polls'}}><NavItem>Latest Polls</NavItem></LinkContainer>
                         <LinkContainer to={{pathname: '/CreatePoll'}}><NavItem>Create Poll</NavItem></LinkContainer>
-                        <LinkContainer to={{pathname: '/DeletePoll'}}><NavItem>Delete Poll</NavItem></LinkContainer>
+                        <LinkContainer to={{pathname: '/YourPolls'}}><NavItem>Your Polls</NavItem></LinkContainer>
                     </Nav>
+                    }
+                    {!this.state.loggedIn &&
+                    <Nav>
+                        <LinkContainer to={{pathname: '/Polls'}}><NavItem>Latest Polls</NavItem></LinkContainer>
+                    </Nav>
+                    }
                     <Navbar.Form style={{marginRight:10}} pullRight>
                         {!this.state.loggedIn &&
                             <div>

@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import DeleteButton from '../presentation/DeleteButton'
 import styles from './styles'
 import Axios from 'axios'
+import { Panel } from 'react-bootstrap'
 
-class DeletePoll extends Component{
+class YourPolls extends Component{
     constructor(){
         super()
         this.state = {
@@ -17,7 +18,7 @@ class DeletePoll extends Component{
 
     getPolls(){
         Axios
-        .get('/api/polls')
+        .get(`/api/polls?username=${localStorage.username}`)
         .then((res) => {
             this.setState({
                 polls: res.data
@@ -40,6 +41,8 @@ class DeletePoll extends Component{
         const style = styles.poll
         return(
             <div>
+                <Panel>Share your polls with your friends!<p><a href={`/Polls?username=${localStorage.username}`}>link to your polls</a></p></Panel>
+                
                 <ul>
                     <DeleteButton click={this.deletePoll.bind(this)} polls={this.state.polls} />          
                 </ul>
@@ -48,4 +51,4 @@ class DeletePoll extends Component{
     }
 }
 
-export default DeletePoll
+export default YourPolls

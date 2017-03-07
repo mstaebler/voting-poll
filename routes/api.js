@@ -16,6 +16,12 @@ router.get('/polls/:id', (req, res, next) => {
     
 });
 
+router.put('/polls', (req, res, next) => {
+    var resource = req.params.resource;
+    console.log('req.body', req.body)
+    return controller.update(req.body).then(doc => res.json(doc.insertedId));
+})
+
 router.post('/polls', (req, res, next) => {
     var resource = req.params.resource;
 

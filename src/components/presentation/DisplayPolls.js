@@ -7,7 +7,7 @@ class DisplayPolls extends Component{
     render(){
         const pollItems = this.props.polls.map((poll, i)  => {
             return(
-                <Poll key={poll.title} username={poll.username} title={poll.title} question={poll.question} options={poll.options} />
+                <Poll _id={poll._id} key={poll._id} username={poll.username} title={poll.title} question={poll.question} options={poll.options} answers={poll.answers} />
             )
         })
         const style = styles.poll

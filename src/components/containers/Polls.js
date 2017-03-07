@@ -12,8 +12,12 @@ class Polls extends Component {
     }
 
     componentDidMount(){
+        var url = '/api/polls'
+        if(this.props.location.query.username){
+            url = `/api/polls?username=${this.props.location.query.username}`
+        }
         Axios
-        .get('/api/polls')
+        .get(url)
         .then((res) => {
             this.setState({
                 polls: res.data
