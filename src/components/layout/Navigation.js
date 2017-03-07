@@ -8,7 +8,8 @@ class Navigation extends Component {
         super()
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            loggedIn: false
         }
     }
 
@@ -16,6 +17,10 @@ class Navigation extends Component {
         this.setState({
             loggedIn: props.loggedIn
         })
+    }
+
+    componentWillMount() {
+        this.props.login()
     }
 
     updateField(event) {

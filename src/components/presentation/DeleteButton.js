@@ -7,7 +7,7 @@ class DeleteButton extends Component{
         const pollItems = this.props.polls.map((poll, i)  => {
             let answers = []
             Object.keys(poll.answers).map((key, i ) => {
-                answers.push(`${key}: ${poll.answers[key]}`)
+                answers.push(`${key}: ${poll.answers[key]}  `)
             })
             return(
                 <Panel key={i}>

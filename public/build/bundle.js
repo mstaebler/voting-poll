@@ -21456,7 +21456,7 @@ var DeleteButton = function (_Component) {
             var pollItems = this.props.polls.map(function (poll, i) {
                 var answers = [];
                 Object.keys(poll.answers).map(function (key, i) {
-                    answers.push(key + ': ' + poll.answers[key]);
+                    answers.push(key + ': ' + poll.answers[key] + '  ');
                 });
                 return _react2.default.createElement(
                     _reactBootstrap.Panel,
@@ -47234,7 +47234,8 @@ var Navigation = function (_Component) {
 
         _this.state = {
             username: '',
-            password: ''
+            password: '',
+            loggedIn: false
         };
         return _this;
     }
@@ -47245,6 +47246,11 @@ var Navigation = function (_Component) {
             this.setState({
                 loggedIn: props.loggedIn
             });
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            this.props.login();
         }
     }, {
         key: 'updateField',
