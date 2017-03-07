@@ -5,10 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var Promise = require('bluebird');
-var PollController = require('./controllers/PollController');
+var config = require('./controllers/config');
 require('dotenv').config();
 
-PollController.connect().then(output => console.log('connection success'));
+config.connect().then(output => console.log('connection success'));
 
 
 var index = require('./routes/index');
