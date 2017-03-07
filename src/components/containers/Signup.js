@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Option from '../presentation/Option'
 import styles from './styles'
 import Axios from 'axios'
 import { FormGroup, FormControl, Button } from 'react-bootstrap'
@@ -13,32 +12,31 @@ class Signup extends Component{
         }
     }
 
-    validate({title, question, options}){
-        if(title.length > 0 && question.length > 0 && options[0] !== '' && options[1] !== ''){
+    uploadUser(user){
+        Axios
+        .post('/auth/user', user)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err))
+    }
+
+    validate({username, password}){
+        if(username.length > 0 && password.length > 0){
             return true
         }
         return false
     }
 
     createAccount(event){
-        var polls = this.state.polls;
-        var newPoll = {title: this.state.title, question: this.state.question, options: this.state.options}
-        if(this.validate(newPoll)){
-            polls.push(newPoll)
+        var newUser = {username: this.state.email, password: this.state.password}
+        if(this.validate(newUser)){
             this.setState({
-                title: {
-                    title: ''
-                },
-                question: {
-                    question: ''
-                },
-                options: ['',''],
-                polls: polls
+                email: '',
+                password: ''
             })
-            this.uploadPoll(newPoll)
+            this.uploadUser(newUser)
         }
         else{
-            console.log('invalid poll')
+            console.log('invalid Username')
         }
         
     }

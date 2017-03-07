@@ -20329,10 +20329,6 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Option = __webpack_require__(91);
-
-var _Option2 = _interopRequireDefault(_Option);
-
 var _styles = __webpack_require__(72);
 
 var _styles2 = _interopRequireDefault(_styles);
@@ -20369,13 +20365,21 @@ var Signup = function (_Component) {
     }
 
     _createClass(Signup, [{
+        key: 'uploadUser',
+        value: function uploadUser(user) {
+            _axios2.default.post('/auth/user', user).then(function (res) {
+                return console.log(res);
+            }).catch(function (err) {
+                return console.log(err);
+            });
+        }
+    }, {
         key: 'validate',
         value: function validate(_ref) {
-            var title = _ref.title,
-                question = _ref.question,
-                options = _ref.options;
+            var username = _ref.username,
+                password = _ref.password;
 
-            if (title.length > 0 && question.length > 0 && options[0] !== '' && options[1] !== '') {
+            if (username.length > 0 && password.length > 0) {
                 return true;
             }
             return false;
@@ -20383,23 +20387,15 @@ var Signup = function (_Component) {
     }, {
         key: 'createAccount',
         value: function createAccount(event) {
-            var polls = this.state.polls;
-            var newPoll = { title: this.state.title, question: this.state.question, options: this.state.options };
-            if (this.validate(newPoll)) {
-                polls.push(newPoll);
+            var newUser = { username: this.state.email, password: this.state.password };
+            if (this.validate(newUser)) {
                 this.setState({
-                    title: {
-                        title: ''
-                    },
-                    question: {
-                        question: ''
-                    },
-                    options: ['', ''],
-                    polls: polls
+                    email: '',
+                    password: ''
                 });
-                this.uploadPoll(newPoll);
+                this.uploadUser(newUser);
             } else {
-                console.log('invalid poll');
+                console.log('invalid Username');
             }
         }
     }, {
@@ -21464,7 +21460,13 @@ var _reactBootstrap = __webpack_require__(31);
 
 var _reactRouterBootstrap = __webpack_require__(501);
 
+var _axios = __webpack_require__(71);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -21478,12 +21480,30 @@ var Navigation = function (_Component) {
     function Navigation() {
         _classCallCheck(this, Navigation);
 
-        return _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).call(this));
+
+        _this.state = {
+            username: '',
+            password: ''
+        };
+        return _this;
     }
 
     _createClass(Navigation, [{
-        key: 'navidate',
-        value: function navidate() {}
+        key: 'updateField',
+        value: function updateField(event) {
+            this.setState(_defineProperty({}, event.target.id, event.target.value));
+        }
+    }, {
+        key: 'login',
+        value: function login(event) {
+            var loginInfo = 'username=' + this.state.username;
+            _axios2.default.get('/auth/user?' + loginInfo).then(function (res) {
+                return console.log(res.data[0].password);
+            }).catch(function (err) {
+                return console.log(err);
+            });
+        }
     }, {
         key: 'render',
         value: function render() {
@@ -21544,12 +21564,12 @@ var Navigation = function (_Component) {
                         _react2.default.createElement(
                             _reactBootstrap.FormGroup,
                             null,
-                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Username' }),
-                            _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Password' }),
+                            _react2.default.createElement(_reactBootstrap.FormControl, { id: 'username', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Username' }),
+                            _react2.default.createElement(_reactBootstrap.FormControl, { id: 'password', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Password' }),
                             ' ',
                             _react2.default.createElement(
                                 _reactBootstrap.Button,
-                                { type: 'submit' },
+                                { onClick: this.login.bind(this), type: 'submit' },
                                 'Login'
                             )
                         ),

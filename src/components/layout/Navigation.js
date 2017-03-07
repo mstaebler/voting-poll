@@ -1,11 +1,29 @@
 import React, { Component } from 'react'
 import { Navbar, Nav, NavItem, MenuItem, FormGroup, FormControl, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import Axios from 'axios'
 
 class Navigation extends Component {
-    navidate(){
-
+    constructor(){
+        super()
+        this.state = {
+            username: '',
+            password: ''
+        }
     }
+
+    updateField(event){
+        this.setState({[event.target.id]: event.target.value})  
+    }
+
+    login(event){
+        var loginInfo = `username=${this.state.username}`
+        Axios
+        .get(`/auth/user?${loginInfo}`)
+        .then((res) => console.log(res.data[0].password))
+        .catch((err) => console.log(err))
+    }
+
     render(){
         return(
             <Navbar inverse collapseOnSelect>
@@ -23,10 +41,10 @@ class Navigation extends Component {
                     </Nav>
                     <Navbar.Form style={{marginRight:10}} pullRight>
                         <FormGroup>
-                            <FormControl type="text" placeholder="Username" />
-                            <FormControl type="text" placeholder="Password" />
+                            <FormControl id="username" onChange={this.updateField.bind(this)} type="text" placeholder="Username" />
+                            <FormControl id="password" onChange={this.updateField.bind(this)} type="text" placeholder="Password" />
                             {' '}
-                            <Button type="submit">Login</Button>
+                            <Button onClick={this.login.bind(this)} type="submit">Login</Button>
                         </FormGroup>
                             <LinkContainer to={{pathname: '/Signup'}}><Button href="#/Signup">Sign Up</Button></LinkContainer>
                     </Navbar.Form>
