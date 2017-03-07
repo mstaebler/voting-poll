@@ -47282,9 +47282,13 @@ var Navigation = function (_Component) {
                         _reactBootstrap.Navbar.Brand,
                         null,
                         _react2.default.createElement(
-                            'a',
-                            null,
-                            'VotePoll'
+                            _reactRouterBootstrap.LinkContainer,
+                            { to: { pathname: '/' } },
+                            _react2.default.createElement(
+                                'a',
+                                null,
+                                'VotePoll'
+                            )
                         )
                     ),
                     _react2.default.createElement(_reactBootstrap.Navbar.Toggle, null)

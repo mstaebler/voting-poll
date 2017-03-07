@@ -42,7 +42,7 @@ class Navigation extends Component {
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                 <Navbar.Brand>
-                    <a>VotePoll</a>
+                    <LinkContainer to={{pathname: '/'}}><a>VotePoll</a></LinkContainer>
                 </Navbar.Brand>
                 <Navbar.Toggle />
                 </Navbar.Header>
