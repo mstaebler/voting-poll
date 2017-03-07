@@ -12,16 +12,24 @@ class Navigation extends Component {
         }
     }
 
-    updateField(event){
+    componentWillReceiveProps(props) {
+        this.setState({
+            loggedIn: props.loggedIn
+        })
+    }
+
+    updateField(event) {
         this.setState({[event.target.id]: event.target.value})  
     }
 
-    login(event){
-        var loginInfo = `username=${this.state.username}`
-        Axios
-        .get(`/auth/user?${loginInfo}`)
-        .then((res) => console.log(res.data[0].password))
-        .catch((err) => console.log(err))
+    login(event) {
+        event.preventDefault()
+        this.props.login(this.state.username, this.state.password)
+    }
+
+    logout(event) {
+        event.preventDefault()
+        this.props.logout()
     }
 
     render(){
@@ -40,13 +48,22 @@ class Navigation extends Component {
                         <LinkContainer to={{pathname: '/DeletePoll'}}><NavItem>Delete Poll</NavItem></LinkContainer>
                     </Nav>
                     <Navbar.Form style={{marginRight:10}} pullRight>
-                        <FormGroup>
-                            <FormControl id="username" onChange={this.updateField.bind(this)} type="text" placeholder="Username" />
-                            <FormControl id="password" onChange={this.updateField.bind(this)} type="text" placeholder="Password" />
-                            {' '}
-                            <Button onClick={this.login.bind(this)} type="submit">Login</Button>
-                        </FormGroup>
-                            <LinkContainer to={{pathname: '/Signup'}}><Button href="#/Signup">Sign Up</Button></LinkContainer>
+                        {!this.state.loggedIn &&
+                            <div>
+                            <FormGroup>
+                                <FormControl id="username" onChange={this.updateField.bind(this)} type="text" placeholder="Username" />
+                                <FormControl id="password" onChange={this.updateField.bind(this)} type="text" placeholder="Password" />
+                                {' '}
+                                <Button onClick={this.login.bind(this)} type="submit">Login</Button>
+                            </FormGroup>
+                                <LinkContainer to={{pathname: '/Signup'}}><Button href="#/Signup">Sign Up</Button></LinkContainer>
+                            </div>
+                        }
+                        {this.state.loggedIn &&
+                            <div>
+                                <Button onClick={this.logout.bind(this)}>Logout</Button>
+                            </div>
+                        }
                     </Navbar.Form>
                 </Navbar.Collapse>
             </Navbar>

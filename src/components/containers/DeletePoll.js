@@ -19,7 +19,6 @@ class DeletePoll extends Component{
         Axios
         .get('/api/polls')
         .then((res) => {
-            console.log(res)
             this.setState({
                 polls: res.data
             })

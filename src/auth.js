@@ -10,8 +10,8 @@ module.exports = {
         }
         Axios.get('/auth/user?username='+email+'&password='+pass)
         .then((res) => {
-            if(res.authenticated) {
-                localStorage.token = res.token
+            if(res.data.authenticated) {
+                localStorage.token = res.data.token
                 if(cb) cb(true)
                 this.onChange(true)
             } else {

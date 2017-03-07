@@ -3,7 +3,15 @@ var router = express.Router();
 var controller = require('../controllers/UserController');
 
 router.get('/user', (req, res, next) => {  
-    return controller.find(req.query).then(doc => res.json(doc));
+    controller.find(req.query).then(doc => {
+        if(doc.length > 0) return res.json({ 
+            authenticated: true,
+            token: Math.random().toString(36).substring(7)
+        })
+        return res.json({
+            authenticated: false
+        })
+    });
 });
 
 router.post('/user', (req, res, next) => { 
