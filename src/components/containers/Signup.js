@@ -7,7 +7,7 @@ class Signup extends Component{
     constructor(){
         super()
         this.state = {
-            email: '',
+            username: '',
             password: ''
         }
     }
@@ -27,10 +27,10 @@ class Signup extends Component{
     }
 
     createAccount(event){
-        var newUser = {username: this.state.email, password: this.state.password}
+        var newUser = {username: this.state.username, password: this.state.password}
         if(this.validate(newUser)){
             this.setState({
-                email: '',
+                username: '',
                 password: ''
             })
             this.uploadUser(newUser)
@@ -52,7 +52,7 @@ class Signup extends Component{
                 <li style={style.list}>
                     <h3 style={style.header}>Create Account</h3>
                     <FormGroup>
-                        <FormControl id="email" onChange={this.updateField.bind(this)} type="text" placeholder="Email" />
+                        <FormControl id="username" onChange={this.updateField.bind(this)} type="text" placeholder="username" />
                         <FormControl id="password" onChange={this.updateField.bind(this)} type="text" placeholder="Password" />
                         {' '}
                         <Button onClick={this.createAccount.bind(this)} type="submit">Create Account</Button>

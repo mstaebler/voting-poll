@@ -19964,7 +19964,8 @@ var CreatePoll = function (_Component) {
             title: '',
             question: '',
             options: ['', ''],
-            polls: []
+            polls: [],
+            username: localStorage.username
         };
         return _this;
     }
@@ -20001,7 +20002,7 @@ var CreatePoll = function (_Component) {
         key: 'createPoll',
         value: function createPoll(event) {
             var polls = this.state.polls;
-            var newPoll = { title: this.state.title, question: this.state.question, options: this.state.options };
+            var newPoll = { username: this.state.username, title: this.state.title, question: this.state.question, options: this.state.options };
             if (this.validate(newPoll)) {
                 polls.push(newPoll);
                 this.setState({
@@ -20162,7 +20163,6 @@ var DeletePoll = function (_Component) {
     }, {
         key: 'deletePoll',
         value: function deletePoll(event) {
-            console.log('/api/polls/' + event.target.id);
             _axios2.default.delete('/api/polls/' + event.target.id).then(function (res) {
                 console.log(res);
             }).catch(function (err) {
@@ -20265,7 +20265,7 @@ var Polls = function (_Component) {
                 _react2.default.createElement(
                     'ul',
                     null,
-                    _react2.default.createElement(_DisplayPolls2.default, { polls: this.state.polls })
+                    _react2.default.createElement(_DisplayPolls2.default, { polls: this.state.polls, username: this.state.username })
                 )
             );
         }
@@ -20322,7 +20322,7 @@ var Signup = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Signup.__proto__ || Object.getPrototypeOf(Signup)).call(this));
 
         _this.state = {
-            email: '',
+            username: '',
             password: ''
         };
         return _this;
@@ -20351,10 +20351,10 @@ var Signup = function (_Component) {
     }, {
         key: 'createAccount',
         value: function createAccount(event) {
-            var newUser = { username: this.state.email, password: this.state.password };
+            var newUser = { username: this.state.username, password: this.state.password };
             if (this.validate(newUser)) {
                 this.setState({
-                    email: '',
+                    username: '',
                     password: ''
                 });
                 this.uploadUser(newUser);
@@ -20385,7 +20385,7 @@ var Signup = function (_Component) {
                     _react2.default.createElement(
                         _reactBootstrap.FormGroup,
                         null,
-                        _react2.default.createElement(_reactBootstrap.FormControl, { id: 'email', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Email' }),
+                        _react2.default.createElement(_reactBootstrap.FormControl, { id: 'username', onChange: this.updateField.bind(this), type: 'text', placeholder: 'username' }),
                         _react2.default.createElement(_reactBootstrap.FormControl, { id: 'password', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Password' }),
                         ' ',
                         _react2.default.createElement(
@@ -20435,6 +20435,8 @@ var _auth = __webpack_require__(539);
 
 var _auth2 = _interopRequireDefault(_auth);
 
+var _reactRouter = __webpack_require__(242);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20453,16 +20455,20 @@ var Home = function (_Component) {
 
         _this.updateAuth = _this.updateAuth.bind(_this);
         _this.state = {
-            loggedIn: _auth2.default.loggedIn()
+            loggedIn: _auth2.default.loggedIn(),
+            username: ''
         };
         return _this;
     }
 
     _createClass(Home, [{
         key: 'updateAuth',
-        value: function updateAuth(bool) {
+        value: function updateAuth(bool, username) {
             this.setState({
-                loggedIn: bool
+                loggedIn: bool,
+                username: username || ''
+            }, function () {
+                console.log('state updated ', this.state);
             });
         }
     }, {
@@ -20473,13 +20479,14 @@ var Home = function (_Component) {
         }
     }, {
         key: 'login',
-        value: function login(username, pass, cb) {
-            _auth2.default.login(username, pass, cb);
+        value: function login(username, pass) {
+            _auth2.default.login(username, pass);
         }
     }, {
         key: 'logout',
         value: function logout() {
             _auth2.default.logout();
+            this.context.router.push('/');
         }
     }, {
         key: 'render',
@@ -20487,7 +20494,7 @@ var Home = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'container' },
-                _react2.default.createElement(_Navigation2.default, { loggedIn: this.state.loggedIn, logout: this.logout.bind(this), login: this.login.bind(this) }),
+                _react2.default.createElement(_Navigation2.default, { loggedIn: this.state.loggedIn, logout: this.logout.bind(this), login: this.login.bind(this), username: this.state.username }),
                 _react2.default.createElement(
                     _reactBootstrap.Jumbotron,
                     null,
@@ -20509,6 +20516,10 @@ var Home = function (_Component) {
 
     return Home;
 }(_react.Component);
+
+Home.contextTypes = {
+    router: _react2.default.PropTypes.object
+};
 
 exports.default = Home;
 
@@ -21607,7 +21618,7 @@ var DisplayPolls = function (_Component) {
         key: 'render',
         value: function render() {
             var pollItems = this.props.polls.map(function (poll, i) {
-                return _react2.default.createElement(_Poll2.default, { key: poll.title, title: poll.title, question: poll.question, options: poll.options });
+                return _react2.default.createElement(_Poll2.default, { key: poll.title, username: poll.username, title: poll.title, question: poll.question, options: poll.options });
             });
             var style = _styles2.default.poll;
             return _react2.default.createElement(
@@ -21693,6 +21704,12 @@ var Poll = function (_Component) {
                         'p',
                         null,
                         this.props.question
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        'By ',
+                        this.props.username
                     ),
                     _react2.default.createElement(
                         _reactBootstrap.FormGroup,
@@ -47346,8 +47363,14 @@ var Navigation = function (_Component) {
                             'div',
                             null,
                             _react2.default.createElement(
+                                _reactBootstrap.Navbar.Brand,
+                                null,
+                                'Hello ',
+                                this.props.username
+                            ),
+                            _react2.default.createElement(
                                 _reactBootstrap.Button,
-                                { onClick: this.logout.bind(this) },
+                                { onClick: this.logout.bind(this), type: 'submit' },
                                 'Logout'
                             )
                         )
@@ -47585,22 +47608,19 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = {
-    login: function login(email, pass, cb) {
+    login: function login(email, pass) {
         var _this = this;
 
-        cb = arguments[arguments.length - 1];
         if (localStorage.token) {
-            if (cb) cb(true);
-            this.onChange(true);
+            this.onChange(true, localStorage.username);
             return;
         }
         _axios2.default.get('/auth/user?username=' + email + '&password=' + pass).then(function (res) {
             if (res.data.authenticated) {
                 localStorage.token = res.data.token;
-                if (cb) cb(true);
-                _this.onChange(true);
+                localStorage['username'] = email;
+                _this.onChange(true, email);
             } else {
-                if (cb) cb(false);
                 _this.onChange(false);
             }
         }).catch(function (err) {
@@ -47610,10 +47630,10 @@ module.exports = {
     getToken: function getToken() {
         return localStorage.token;
     },
-    logout: function logout(cb) {
+    logout: function logout() {
         delete localStorage.token;
-        if (cb) cb();
-        this.onChange(false);
+        delete localStorage.username;
+        this.onChange(false, '');
     },
     loggedIn: function loggedIn() {
         return !!localStorage.token;

@@ -60,9 +60,10 @@ class Navigation extends Component {
                             </div>
                         }
                         {this.state.loggedIn &&
-                            <div>
-                                <Button onClick={this.logout.bind(this)}>Logout</Button>
-                            </div>
+                        <div>
+                            <Navbar.Brand>Hello {this.props.username}</Navbar.Brand>
+                            <Button onClick={this.logout.bind(this)} type="submit">Logout</Button>     
+                        </div> 
                         }
                     </Navbar.Form>
                 </Navbar.Collapse>

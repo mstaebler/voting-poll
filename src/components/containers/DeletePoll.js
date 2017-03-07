@@ -27,7 +27,6 @@ class DeletePoll extends Component{
     }
 
     deletePoll(event){
-        console.log(`/api/polls/${event.target.id}`)
         Axios
         .delete(`/api/polls/${event.target.id}`)
         .then((res) => {

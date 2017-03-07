@@ -17,6 +17,7 @@ class Poll extends Component {
                 <li style={style.list}>
                     <h3 style={style.header}>{this.props.title}</h3>
                     <p>{this.props.question}</p>
+                    <p>By {this.props.username}</p>
                     <FormGroup>
                         {options}
                     </FormGroup>

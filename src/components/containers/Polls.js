@@ -27,7 +27,7 @@ class Polls extends Component {
         return(
             <div>
                 <ul>
-                    <DisplayPolls polls={this.state.polls} />          
+                    <DisplayPolls polls={this.state.polls} username={this.state.username} />          
                 </ul>
             </div>
         )

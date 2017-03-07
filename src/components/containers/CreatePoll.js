@@ -11,7 +11,8 @@ class CreatePoll extends Component{
             title: '',
             question: '',
             options: ['',''],
-            polls: []
+            polls: [],
+            username: localStorage.username
         }
     }
     
@@ -37,7 +38,7 @@ class CreatePoll extends Component{
 
     createPoll(event){
         var polls = this.state.polls;
-        var newPoll = {title: this.state.title, question: this.state.question, options: this.state.options}
+        var newPoll = {username: this.state.username, title: this.state.title, question: this.state.question, options: this.state.options}
         if(this.validate(newPoll)){
             polls.push(newPoll)
             this.setState({

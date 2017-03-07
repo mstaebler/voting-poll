@@ -1,21 +1,18 @@
 import Axios from 'axios'
 
 module.exports = {
-    login(email, pass, cb) {
-        cb = arguments[arguments.length - 1]
-        if( localStorage.token) {
-            if(cb) cb(true)
-            this.onChange(true)
+    login(email, pass) {
+        if(localStorage.token) {
+            this.onChange(true, localStorage.username)
             return
         }
         Axios.get('/auth/user?username='+email+'&password='+pass)
         .then((res) => {
             if(res.data.authenticated) {
                 localStorage.token = res.data.token
-                if(cb) cb(true)
-                this.onChange(true)
+                localStorage['username'] = email
+                this.onChange(true, email)
             } else {
-                if(cb) cb(false)
                 this.onChange(false)
             }
         })
@@ -26,11 +23,12 @@ module.exports = {
         return localStorage.token
     },
 
-    logout(cb) {
+    logout() {
         delete localStorage.token
-        if(cb) cb()
-        this.onChange(false)
+        delete localStorage.username
+        this.onChange(false, '')
     },
+
     loggedIn() {
         return !!localStorage.token
     },
