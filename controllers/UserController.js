@@ -1,7 +1,7 @@
 var Promise = require('bluebird');
 var MongoClient = Promise.promisifyAll(require('mongodb').MongoClient);
 var ObjectId = require('mongodb').ObjectId;
-var config = require('./config')
+var config = require('./config');
 
 module.exports = {
     
