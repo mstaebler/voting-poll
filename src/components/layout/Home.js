@@ -49,6 +49,7 @@ class Home extends Component {
                         <Well>Create an account to create and remove your polls</Well>
                         <Well>If you are logged in you can add options to current polls</Well>
                         <Well>Vote on a poll to see the results</Well>
+                        <Well>Share your polls with friends!</Well>
                     </div>
                 }
                 {this.props.children} 

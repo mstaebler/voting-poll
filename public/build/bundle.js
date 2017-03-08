@@ -40957,6 +40957,11 @@ var Home = function (_Component) {
                         _reactBootstrap.Well,
                         null,
                         'Vote on a poll to see the results'
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Well,
+                        null,
+                        'Share your polls with friends!'
                     )
                 ),
                 this.props.children
