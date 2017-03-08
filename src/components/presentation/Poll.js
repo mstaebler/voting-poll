@@ -46,9 +46,8 @@ class Poll extends Component {
     }
     onChange(event) {
         if(!this.state.voted){
-            if(this.state.answers[event.target.value]){
-                var newAnswers = Object.assign({},this.state.answers)
-                newAnswers[event.target.value] += 1
+            var newAnswers = Object.assign({},this.state.answers)
+            this.state.answers[event.target.value] ? newAnswers[event.target.value] += 1 : newAnswers[event.target.value] = 1 
                 this.setState({
                     answers: newAnswers
                 },function(){
@@ -61,25 +60,7 @@ class Poll extends Component {
                         answers: this.state.answers
                     }
                     this.updatePoll(poll)
-                })
-            } else {
-                var newAnswers = Object.assign({},this.state.answers)
-                newAnswers[event.target.value] = 1
-                this.setState({
-                    answers: newAnswers
-                }, function(){
-                    var poll = {
-                        _id: this.props._id,
-                        title: this.props.title,
-                        question: this.props.question,
-                        options: this.state.options,
-                        username: this.props.username,
-                        answers: this.state.answers
-                    }
-                    this.updatePoll(poll)
-                })
-            }
-            
+                })          
         }       
     }
 
