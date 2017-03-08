@@ -38,6 +38,7 @@ class Poll extends Component {
                         title: this.props.title,
                         question: this.props.question,
                         options: this.props.options,
+                        username: this.props.username,
                         answers: this.state.answers
                     }
                     this.updatePoll(poll)
@@ -54,7 +55,7 @@ class Poll extends Component {
                         title: this.props.title,
                         question: this.props.question,
                         options: this.props.options,
-                        username: localStorage.username,
+                        username: this.props.username,
                         answers: this.state.answers
                     }
                     this.updatePoll(poll)
