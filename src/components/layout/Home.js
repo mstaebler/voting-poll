@@ -41,7 +41,7 @@ class Home extends Component {
             <div style={{fontFamily:'Rubik Mono One, sans-serif'}} className="container">
                 <Navigation loggedIn={this.state.loggedIn} logout={this.logout.bind(this)} login={this.login.bind(this)} username={this.state.username}></Navigation>
                 <Jumbotron>
-                    <h1 style={{fontFamily:'Lobster, cursive', fontSize: '10em'}}>VotePoll</h1>
+                    <h1 style={{fontFamily:'Lobster, cursive', fontSize: '8em'}}>Vote Poll</h1>
                     <p>Create custom polls, vote and view results!</p>
                 </Jumbotron>
                 {this.props.location.pathname === '/' &&

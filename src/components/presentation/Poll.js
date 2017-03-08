@@ -94,8 +94,8 @@ class Poll extends Component {
                         {options}
                         {localStorage.username &&
                         <span>
-                            <FormControl id="option" type="text" placeholder="new option" onChange={this.updateField.bind(this)} value= {this.state.title} />
-                            <Button onClick={this.addOption.bind(this)}>Add Option</Button>
+                            <FormControl style={{marginTop:20}} id="option" type="text" placeholder="new option" onChange={this.updateField.bind(this)} value= {this.state.title} />
+                            <Button style={{marginTop:10}} onClick={this.addOption.bind(this)}>Add Option</Button>
                         </span>
                         }
                     </FormGroup>

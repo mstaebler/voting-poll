@@ -15193,14 +15193,13 @@ exports.default = {
             border: '1px solid #ddd'
         },
         header: {
-            marginBottom: 0,
-            marginLeft: 75,
-            marginRight: 75
+            marginBottom: 10
+
         },
         list: {
             listStyle: 'none',
-            marginLeft: 75,
-            marginRight: 75
+            marginLeft: '15%',
+            marginRight: '15%'
         }
     }
 };
@@ -40931,8 +40930,8 @@ var Home = function (_Component) {
                     null,
                     _react2.default.createElement(
                         'h1',
-                        { style: { fontFamily: 'Lobster, cursive', fontSize: '10em' } },
-                        'VotePoll'
+                        { style: { fontFamily: 'Lobster, cursive', fontSize: '8em' } },
+                        'Vote Poll'
                     ),
                     _react2.default.createElement(
                         'p',
@@ -42400,10 +42399,10 @@ var Poll = function (_Component) {
                         localStorage.username && _react2.default.createElement(
                             'span',
                             null,
-                            _react2.default.createElement(_reactBootstrap.FormControl, { id: 'option', type: 'text', placeholder: 'new option', onChange: this.updateField.bind(this), value: this.state.title }),
+                            _react2.default.createElement(_reactBootstrap.FormControl, { style: { marginTop: 20 }, id: 'option', type: 'text', placeholder: 'new option', onChange: this.updateField.bind(this), value: this.state.title }),
                             _react2.default.createElement(
                                 _reactBootstrap.Button,
-                                { onClick: this.addOption.bind(this) },
+                                { style: { marginTop: 10 }, onClick: this.addOption.bind(this) },
                                 'Add Option'
                             )
                         )

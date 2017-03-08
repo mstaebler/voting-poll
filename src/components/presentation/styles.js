@@ -7,14 +7,13 @@ export default {
             border: '1px solid #ddd',
         },
         header: {
-            marginBottom:0,
-            marginLeft:75,
-            marginRight:75
+            marginBottom:10,
+            
         },
         list: {
             listStyle:'none',
-            marginLeft:75,
-            marginRight:75
+            marginLeft:'15%',
+            marginRight:'15%'
         }
     }
 }
