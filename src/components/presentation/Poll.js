@@ -2,26 +2,46 @@ import React, { Component } from 'react'
 import Option from './Option'
 import styles from './styles'
 import Choice from './Choice'
-import { FormGroup } from 'react-bootstrap'
+import { FormGroup, FormControl, Button } from 'react-bootstrap'
 import Axios from 'axios'
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts'
 
 class Poll extends Component {
     constructor(){
         super()
         this.state = {
-            voted: false
+            voted: false,
+            option: ''
         }
     }
 
     updatePoll(poll) {
         Axios
         .put('/api/polls', poll)
-        .then((res) => console.log(res))
+        .then((res) => {
+            let data = []
+            Object.keys(this.state.answers).map((key, i ) => {
+                data.push({name: key, value: this.state.answers[key]})
+            })
+            this.setState({
+                voted: true,
+                graphData: data
+            })
+        })
         .catch((err) => console.log(err))
     }
-    componentDidMount(){
+    componentWillMount(){
         this.setState({
-            answers: this.props.answers
+            answers: this.props.answers,
+            options: this.props.options
+        },function(){
+            let data = []
+            Object.keys(this.state.answers).map((key, i ) => {
+                data.push({name: key, value: this.state.answers[key]})
+            })
+            this.setState({
+                graphData: data
+            })
         })
     }
     onChange(event) {
@@ -30,14 +50,13 @@ class Poll extends Component {
                 var newAnswers = Object.assign({},this.state.answers)
                 newAnswers[event.target.value] += 1
                 this.setState({
-                    voted: true,
                     answers: newAnswers
                 },function(){
                     var poll = {
                         _id: this.props._id,
                         title: this.props.title,
                         question: this.props.question,
-                        options: this.props.options,
+                        options: this.state.options,
                         username: this.props.username,
                         answers: this.state.answers
                     }
@@ -47,14 +66,13 @@ class Poll extends Component {
                 var newAnswers = Object.assign({},this.state.answers)
                 newAnswers[event.target.value] = 1
                 this.setState({
-                    voted: true,
                     answers: newAnswers
                 }, function(){
                     var poll = {
                         _id: this.props._id,
                         title: this.props.title,
                         question: this.props.question,
-                        options: this.props.options,
+                        options: this.state.options,
                         username: this.props.username,
                         answers: this.state.answers
                     }
@@ -65,13 +83,26 @@ class Poll extends Component {
         }       
     }
 
+    updateField(event){
+        this.setState({[event.target.id]: event.target.value})  
+    }
+
+    addOption(event){
+        var newOptions = this.state.options
+        newOptions.push(this.state.option)
+        this.setState({
+            options: newOptions
+        })
+    }
+
     render(){      
-        const options = this.props.options.map((option, i) => {
+        const options = this.state.options.map((option, i) => {
             return(
                 <Choice onChange={this.onChange.bind(this)} key={option.toString()} value={option} option={option} />
             )
         }) 
         const style = styles.poll
+        
         return(
             <div style={style.container}>
                 <li style={style.list}>
@@ -80,8 +111,22 @@ class Poll extends Component {
                     <p>By {this.props.username}</p>
                     <FormGroup>
                         {options}
+                        {localStorage.username &&
+                        <div>
+                            <FormControl id="option" type="text" placeholder="new option" onChange={this.updateField.bind(this)} value= {this.state.title} />
+                            <Button onClick={this.addOption.bind(this)}>Add Option</Button>
+                        </div>
+                        }
                     </FormGroup>
                 </li>
+                {this.state.voted &&
+                <BarChart data={this.state.graphData} width={200} height={200} >
+                    <XAxis dataKey="name" />
+                    <YAxis allowDecimals={false} />
+                    <Tooltip />
+                    <Bar dataKey="value" fill="#8884d8" />
+                </BarChart> 
+                }
             </div>
         )
     }

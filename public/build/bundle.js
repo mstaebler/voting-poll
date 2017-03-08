@@ -21479,7 +21479,7 @@ var DeleteButton = function (_Component) {
                         _recharts.BarChart,
                         { style: { float: 'right' }, data: answers, width: 200, height: 200 },
                         _react2.default.createElement(_recharts.XAxis, { dataKey: 'name' }),
-                        _react2.default.createElement(_recharts.YAxis, null),
+                        _react2.default.createElement(_recharts.YAxis, { allowDecimals: false }),
                         _react2.default.createElement(_recharts.Tooltip, null),
                         _react2.default.createElement(_recharts.Bar, { dataKey: 'value', fill: '#8884d8' })
                     )
@@ -21599,7 +21599,11 @@ var _axios = __webpack_require__(71);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _recharts = __webpack_require__(1156);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -21616,7 +21620,8 @@ var Poll = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Poll.__proto__ || Object.getPrototypeOf(Poll)).call(this));
 
         _this.state = {
-            voted: false
+            voted: false,
+            option: ''
         };
         return _this;
     }
@@ -21624,17 +21629,37 @@ var Poll = function (_Component) {
     _createClass(Poll, [{
         key: 'updatePoll',
         value: function updatePoll(poll) {
+            var _this2 = this;
+
             _axios2.default.put('/api/polls', poll).then(function (res) {
-                return console.log(res);
+                var data = [];
+                Object.keys(_this2.state.answers).map(function (key, i) {
+                    data.push({ name: key, value: _this2.state.answers[key] });
+                });
+                _this2.setState({
+                    voted: true,
+                    graphData: data
+                });
             }).catch(function (err) {
                 return console.log(err);
             });
         }
     }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
             this.setState({
-                answers: this.props.answers
+                answers: this.props.answers,
+                options: this.props.options
+            }, function () {
+                var _this3 = this;
+
+                var data = [];
+                Object.keys(this.state.answers).map(function (key, i) {
+                    data.push({ name: key, value: _this3.state.answers[key] });
+                });
+                this.setState({
+                    graphData: data
+                });
             });
         }
     }, {
@@ -21645,14 +21670,13 @@ var Poll = function (_Component) {
                     var newAnswers = Object.assign({}, this.state.answers);
                     newAnswers[event.target.value] += 1;
                     this.setState({
-                        voted: true,
                         answers: newAnswers
                     }, function () {
                         var poll = {
                             _id: this.props._id,
                             title: this.props.title,
                             question: this.props.question,
-                            options: this.props.options,
+                            options: this.state.options,
                             username: this.props.username,
                             answers: this.state.answers
                         };
@@ -21662,14 +21686,13 @@ var Poll = function (_Component) {
                     var newAnswers = Object.assign({}, this.state.answers);
                     newAnswers[event.target.value] = 1;
                     this.setState({
-                        voted: true,
                         answers: newAnswers
                     }, function () {
                         var poll = {
                             _id: this.props._id,
                             title: this.props.title,
                             question: this.props.question,
-                            options: this.props.options,
+                            options: this.state.options,
                             username: this.props.username,
                             answers: this.state.answers
                         };
@@ -21679,14 +21702,29 @@ var Poll = function (_Component) {
             }
         }
     }, {
+        key: 'updateField',
+        value: function updateField(event) {
+            this.setState(_defineProperty({}, event.target.id, event.target.value));
+        }
+    }, {
+        key: 'addOption',
+        value: function addOption(event) {
+            var newOptions = this.state.options;
+            newOptions.push(this.state.option);
+            this.setState({
+                options: newOptions
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this4 = this;
 
-            var options = this.props.options.map(function (option, i) {
-                return _react2.default.createElement(_Choice2.default, { onChange: _this2.onChange.bind(_this2), key: option.toString(), value: option, option: option });
+            var options = this.state.options.map(function (option, i) {
+                return _react2.default.createElement(_Choice2.default, { onChange: _this4.onChange.bind(_this4), key: option.toString(), value: option, option: option });
             });
             var style = _styles2.default.poll;
+
             return _react2.default.createElement(
                 'div',
                 { style: style.container },
@@ -21712,8 +21750,26 @@ var Poll = function (_Component) {
                     _react2.default.createElement(
                         _reactBootstrap.FormGroup,
                         null,
-                        options
+                        options,
+                        localStorage.username && _react2.default.createElement(
+                            'div',
+                            null,
+                            _react2.default.createElement(_reactBootstrap.FormControl, { id: 'option', type: 'text', placeholder: 'new option', onChange: this.updateField.bind(this), value: this.state.title }),
+                            _react2.default.createElement(
+                                _reactBootstrap.Button,
+                                { onClick: this.addOption.bind(this) },
+                                'Add Option'
+                            )
+                        )
                     )
+                ),
+                this.state.voted && _react2.default.createElement(
+                    _recharts.BarChart,
+                    { data: this.state.graphData, width: 200, height: 200 },
+                    _react2.default.createElement(_recharts.XAxis, { dataKey: 'name' }),
+                    _react2.default.createElement(_recharts.YAxis, { allowDecimals: false }),
+                    _react2.default.createElement(_recharts.Tooltip, null),
+                    _react2.default.createElement(_recharts.Bar, { dataKey: 'value', fill: '#8884d8' })
                 )
             );
         }
