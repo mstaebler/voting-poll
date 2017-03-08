@@ -4,7 +4,7 @@ import styles from './styles'
 import Choice from './Choice'
 import { FormGroup, FormControl, Button } from 'react-bootstrap'
 import Axios from 'axios'
-import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 
 class Poll extends Component {
     constructor(){
@@ -112,20 +112,22 @@ class Poll extends Component {
                     <FormGroup>
                         {options}
                         {localStorage.username &&
-                        <div>
+                        <span>
                             <FormControl id="option" type="text" placeholder="new option" onChange={this.updateField.bind(this)} value= {this.state.title} />
                             <Button onClick={this.addOption.bind(this)}>Add Option</Button>
-                        </div>
+                        </span>
                         }
                     </FormGroup>
                 </li>
                 {this.state.voted &&
-                <BarChart data={this.state.graphData} width={200} height={200} >
+                <ResponsiveContainer width="100%" aspect={4}>
+                <BarChart data={this.state.graphData} width={600} height={200} >
                     <XAxis dataKey="name" />
                     <YAxis allowDecimals={false} />
                     <Tooltip />
                     <Bar dataKey="value" fill="#8884d8" />
                 </BarChart> 
+                </ResponsiveContainer>
                 }
             </div>
         )

@@ -8,12 +8,11 @@ import Signup from './components/containers/Signup'
 import Polls from './components/containers/Polls'
 import auth from './auth'
 
-function requireAuth(nextState, replace) {
+function requireAuth(nextState, replaceState) {
   if (!auth.loggedIn()) {
-    replace({
-      pathname: '/',
-      state: { nextPathname: nextState.location.pathname }
-    })
+    replaceState({
+    nextPathname: nextState.location.pathname 
+    }, '/')
   }
 }
 

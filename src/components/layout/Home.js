@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Polls from '../containers/Polls'
 import Navigation from './Navigation'
-import { Jumbotron } from 'react-bootstrap'
+import { Jumbotron, Well } from 'react-bootstrap'
 import auth from '../../auth'
 import { Router, browserHistory } from 'react-router'
 
@@ -38,12 +38,19 @@ class Home extends Component {
     }
     render() {
         return(
-            <div className="container">
+            <div style={{fontFamily:'Rubik Mono One, sans-serif'}} className="container">
                 <Navigation loggedIn={this.state.loggedIn} logout={this.logout.bind(this)} login={this.login.bind(this)} username={this.state.username}></Navigation>
                 <Jumbotron>
-                    <h1>VotePoll</h1>
+                    <h1 style={{fontFamily:'Lobster, cursive', fontSize: '10em'}}>VotePoll</h1>
                     <p>Create custom polls, vote and view results!</p>
                 </Jumbotron>
+                {this.props.location.pathname === '/' &&
+                    <div style={{textAlign:'center'}}>
+                        <Well>Create an account to create and remove your polls</Well>
+                        <Well>If you are logged in you can add options to current polls</Well>
+                        <Well>Vote on a poll to see the results</Well>
+                    </div>
+                }
                 {this.props.children} 
             </div>
             

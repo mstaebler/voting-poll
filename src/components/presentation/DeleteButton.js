@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styles from './styles'
 import { FormGroup, FormControl, Button, Panel } from 'react-bootstrap'
-import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 
 class DeleteButton extends Component{
     render(){
@@ -12,16 +12,18 @@ class DeleteButton extends Component{
             })
             return(
                 <Panel key={i}>
-                    <Button  id={poll._id} style={{marginRight:50}} onClick={this.props.click}>Delete</Button>
-                    {poll.title}
+                    Title: {poll.title}
                     <br />
-                    <span style={{marginLeft:115}}>{poll.question}</span>
-                    <BarChart style={{float:'right'}} data={answers} width={200} height={200} >
+                    <span>Question: {poll.question}</span>
+                    <Button  style={{float:'right'}} id={poll._id} onClick={this.props.click}>Delete</Button>   
+                    <ResponsiveContainer width="100%" aspect={4}>
+                    <BarChart data={answers} width={500} height={200} >
                         <XAxis dataKey="name" />
                         <YAxis allowDecimals={false} />
                         <Tooltip />
                         <Bar dataKey="value" fill="#8884d8" />
                     </BarChart>  
+                    </ResponsiveContainer>
                 </Panel>
             )
         })

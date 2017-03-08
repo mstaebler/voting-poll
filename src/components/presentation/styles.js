@@ -1,16 +1,20 @@
 export default {
     poll: {
         container: {
-        padding: 16,
-        background:'#F9F9F9',
-        marginTop:12,
-        border: '1px solid #ddd'
+            padding: 16,
+            background:'#F9F9F9',
+            marginTop:12,
+            border: '1px solid #ddd',
         },
         header: {
-            marginBottom:0
+            marginBottom:0,
+            marginLeft:75,
+            marginRight:75
         },
         list: {
-            listStyle:'none'
+            listStyle:'none',
+            marginLeft:75,
+            marginRight:75
         }
     }
 }
