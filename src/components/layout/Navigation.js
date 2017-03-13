@@ -64,7 +64,7 @@ class Navigation extends Component {
                             <div>
                             <FormGroup>
                                 <FormControl id="username" onChange={this.updateField.bind(this)} type="text" placeholder="Username" />
-                                <FormControl id="password" onChange={this.updateField.bind(this)} type="text" placeholder="Password" />
+                                <FormControl id="password" onChange={this.updateField.bind(this)} name="password" type="password" placeholder="Password" />
                                 {' '}
                                 <Button onClick={this.login.bind(this)} type="submit">Login</Button>
                             </FormGroup>

@@ -41969,7 +41969,7 @@ var Navigation = function (_Component) {
                                 _reactBootstrap.FormGroup,
                                 null,
                                 _react2.default.createElement(_reactBootstrap.FormControl, { id: 'username', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Username' }),
-                                _react2.default.createElement(_reactBootstrap.FormControl, { id: 'password', onChange: this.updateField.bind(this), type: 'text', placeholder: 'Password' }),
+                                _react2.default.createElement(_reactBootstrap.FormControl, { id: 'password', onChange: this.updateField.bind(this), name: 'password', type: 'password', placeholder: 'Password' }),
                                 ' ',
                                 _react2.default.createElement(
                                     _reactBootstrap.Button,
